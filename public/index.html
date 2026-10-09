@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Cambit | College Canteen Pre-Order & Smart Kitchen System</title>
+  <meta name="theme-color" content="#f97316">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Cambit">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png">
+  <link rel="icon" type="image/png" href="/assets/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- TOP ANNOUNCEMENT / EMERGENCY BANNERS -->
+  <div id="holidayBanner" class="alert-banner alert-holiday hidden">
+    <div class="banner-content">
+      <span class="banner-icon">🛑</span>
+      <div class="banner-text">
+        <strong>CANTEEN CLOSED:</strong> <span id="holidayBannerText">Sunday / Scheduled Campus Holiday. Pre-ordering is offline today.</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="eventBanner" class="alert-banner alert-event hidden">
+    <div class="banner-content">
+      <span class="banner-icon">⚡</span>
+      <div class="banner-text">
+        <strong>SPECIAL EVENT ACTIVE:</strong> <span id="eventBannerText">Cultural Day / Campus Fest schedule in effect. Pre-ordering temporarily suspended.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMPUS TIME SIMULATOR & TEST TOOLBAR -->
+  <header class="simulator-bar" id="campusSimulatorBar">
+    <div class="container sim-flex">
+      <div class="sim-left">
+        <span class="sim-badge"><span class="pulse-dot"></span> Campus Clock Simulator</span>
+        <span class="sim-time-display">Effective Campus Time: <strong id="simCurrentTimeDisplay">10:30 AM</strong> (<span id="simCurrentDateDisplay">Today</span>)</span>
+      </div>
+      <div class="sim-presets">
+        <span class="sim-label">Test 1-Hr Rule:</span>
+        <button class="btn-chip" data-time="10:30" title="Simulate 10:30 AM - Both 12:05 & 12:55 Slots Open">10:30 AM (Both Open)</button>
+        <button class="btn-chip" data-time="11:20" title="Simulate 11:20 AM - Slot 1 (12:05) Locked, Slot 2 Open">11:20 AM (Slot 1 Cutoff Passed)</button>
+        <button class="btn-chip" data-time="12:15" title="Simulate 12:15 PM - Both Slots Cutoff Passed">12:15 PM (Both Cutoffs Passed)</button>
+        <button class="btn-chip" id="btnLiveClock" title="Switch to live real-world system clock">Use Live Clock</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN NAVIGATION -->
+  <nav class="main-nav">
+    <div class="container nav-container">
+      <div class="brand-group" id="navBrandLogoBtn" style="cursor: pointer;">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <line x1="6" y1="1" x2="6" y2="4"></line>
+            <line x1="10" y1="1" x2="10" y2="4"></line>
+            <line x1="14" y1="1" x2="14" y2="4"></line>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Cambit</span>
+          <span class="brand-tagline">College Canteen Pre-Order</span>
+        </div>
+      </div>
+
+      <!-- PORTAL SWITCHER TABS -->
+      <div class="nav-portal-tabs" id="navPortalTabs">
+        <button class="portal-tab active" id="tabCustomerPortal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Customer Portal (Menu)
+        </button>
+        <button class="portal-tab" id="tabAdminPortal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Canteen Incharge
+          <span class="admin-badge">Admin</span>
+        </button>
+      </div>
+
+      <!-- USER ACTIONS -->
+      <div class="nav-actions">
+        <!-- Auth Profile Badge -->
+        <div class="user-profile-badge" id="userProfileBtn" title="Switch User or Logout">
+          <div class="user-avatar" id="navUserAvatar">ST</div>
+          <div class="user-meta">
+            <span class="user-name" id="navUserName">My Account</span>
+            <span class="user-role" id="navUserRole">Student</span>
+          </div>
+          <button class="btn-icon-switch">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+        </div>
+
+        <!-- My Tokens Button -->
+        <button class="btn-tokens" id="btnMyTokens" title="View Active Tokens">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/></svg>
+          <span>My Tokens</span>
+          <span class="badge-count" id="activeTokensCount">0</span>
+        </button>
+
+        <!-- Cart Trigger -->
+        <button class="btn-cart" id="btnOpenCart" title="View Pre-Order Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span class="cart-label">Cart</span>
+          <span class="cart-badge" id="cartItemCount">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================================================== -->
+  <!-- STEP 1: AUTHENTICATION GATE (CENTERED SIGN IN / SIGN UP) -->
+  <!-- ==================================================== -->
+  <section id="authGateView" class="view-section">
+    <div class="auth-gate-hero-centered">
+      <div class="auth-gate-card-centered">
+        <div class="auth-card-header">
+          <div class="auth-brand-badge">
+            <div class="brand-logo" style="width: 48px; height: 48px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+            </div>
+          </div>
+          <h1>Welcome to <span class="text-gradient">Cambit</span></h1>
+          <p>College Canteen Pre-Order & Kitchen Management</p>
+        </div>
+
+        <div class="auth-card-tabs">
+          <button class="auth-toggle-tab active" id="tabShowLogin">Sign In</button>
+          <button class="auth-toggle-tab" id="tabShowRegister">Sign Up (New User)</button>
+        </div>
+
+        <!-- TAB B: SIGN IN -->
+        <div id="authLoginSection" class="auth-card-body">
+          <form id="gateLoginForm">
+            <div class="form-group">
+              <label>College Email or ID:</label>
+              <input type="text" id="loginEmail" placeholder="e.g. rahul@college.edu or college ID" required>
+            </div>
+
+            <div class="form-group">
+              <label>Password:</label>
+              <input type="password" id="loginPassword" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="btn-primary btn-block" style="padding: 0.85rem; font-size: 0.95rem; margin-top: 0.5rem;">
+              Sign In
+            </button>
+          </form>
+
+          <div class="auth-switch-footer">
+            <span>Don't have an account?</span>
+            <button type="button" class="btn-link" id="linkToRegister">Sign Up here</button>
+          </div>
+        </div>
+
+        <!-- TAB A: REGISTER WITH SLOT SELECTION -->
+        <div id="authRegisterSection" class="auth-card-body hidden">
+          <form id="gateRegisterForm">
+            <div class="form-group">
+              <label>Full Name:</label>
+              <input type="text" id="regFullName" placeholder="e.g. Rahul Nair" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>College Email or ID:</label>
+                <input type="email" id="regEmail" placeholder="e.g. rahul@college.edu" required>
+              </div>
+              <div class="form-group">
+                <label>Phone Number:</label>
+                <input type="tel" id="regPhone" placeholder="e.g. 9876543210" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Account Role:</label>
+                <select id="regUserType">
+                  <option value="CUSTOMER">Student / Faculty (Customer)</option>
+                  <option value="CANTEEN_OWNER">Canteen Incharge (Staff / Owner)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Password:</label>
+                <input type="password" id="regPassword" placeholder="Create a password" required>
+              </div>
+            </div>
+
+            <!-- Lunch Slot 1 (12:05 PM) or Slot 2 (12:55 PM) Selection -->
+            <div class="slot-select-group">
+              <label class="slot-select-title">Select Your Preferred Lunch Shift:</label>
+              <div class="slot-gate-radios">
+                <label class="slot-radio-option active" id="gateSlotOpt1">
+                  <input type="radio" name="gateSlotChoice" value="slot1" checked>
+                  <div class="slot-radio-content">
+                    <div class="slot-radio-top">
+                      <span class="slot-num-badge green">Slot 1</span>
+                      <strong>12:05 PM</strong>
+                    </div>
+                    <small>Early lunch shift (Lighter crowd)</small>
+                    <div class="slot-cutoff-hint">1-Hr Cutoff: 11:05 AM</div>
+                  </div>
+                </label>
+
+                <label class="slot-radio-option" id="gateSlotOpt2">
+                  <input type="radio" name="gateSlotChoice" value="slot2">
+                  <div class="slot-radio-content">
+                    <div class="slot-radio-top">
+                      <span class="slot-num-badge amber">Slot 2</span>
+                      <strong>12:55 PM</strong>
+                    </div>
+                    <small>Peak crowd shift (Kitchen capped)</small>
+                    <div class="slot-cutoff-hint">1-Hr Cutoff: 11:55 AM</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary btn-block" style="padding: 0.85rem; font-size: 0.95rem;">
+              Register
+            </button>
+          </form>
+
+          <div class="auth-switch-footer">
+            <span>Already registered?</span>
+            <button type="button" class="btn-link" id="linkToLogin">Sign In here</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== -->
+  <!-- STEP 2: CUSTOMER PORTAL (FOOD MENU ENTERED BY CANTEEN INCHARGE) -->
+  <!-- ==================================================== -->
+  <main id="customerView" class="view-section">
+    <!-- USER PROFILE & SHIFT STRIP -->
+    <section class="user-shift-strip">
+      <div class="container user-shift-container">
+        <div class="user-greeting">
+          <span class="avatar-circle" id="stripUserAvatar">ST</span>
+          <div>
+            <span class="greet-sub">Welcome back,</span>
+            <strong id="stripUserName">Aarav Sharma</strong>
+          </div>
+        </div>
+
+        <div class="user-slot-badge-box">
+          <span class="slot-tag-label">Active Lunch Shift:</span>
+          <div class="active-slot-pill" id="stripSlotBadge">
+            <span class="pill-dot green"></span>
+            <strong id="stripSlotName">Slot 1: 12:05 PM</strong>
+          </div>
+          <button class="btn-chip" id="btnChangeSlot" title="Switch between 12:05 PM and 12:55 PM">Change Shift</button>
+        </div>
+
+        <div class="user-quick-logout">
+          <button class="btn-secondary" id="btnSwitchAccountTop">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Switch User / Logout
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- HERO / NOTICE BAR -->
+    <section class="hero-strip">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <h1>Hot Fresh Meals. <span class="text-gradient">Zero Physical Queues.</span></h1>
+          <p>Orders must be placed <strong>strictly 1 hour before</strong> your chosen lunch window. Canteen chefs batch-prepare your meals so they are hot & waiting for you.</p>
+        </div>
+        <div class="slot-rule-cards">
+          <!-- Slot 1 Rule Indicator -->
+          <div class="slot-pill" id="slot1StatusPill">
+            <div class="slot-pill-header">
+              <span class="pill-dot green"></span>
+              <strong>Slot 1: 12:05 PM</strong>
+              <span class="pill-tag lighter">Lighter Crowd</span>
+            </div>
+            <div class="slot-pill-body">
+              <span>Cutoff: <strong>11:05 AM</strong></span>
+              <span class="slot-cap-info" id="slot1CapDisplay">18/45 Booked</span>
+            </div>
+            <div class="slot-timer" id="slot1TimerText">Rule Status: Open</div>
+          </div>
+
+          <!-- Slot 2 Rule Indicator -->
+          <div class="slot-pill" id="slot2StatusPill">
+            <div class="slot-pill-header">
+              <span class="pill-dot amber"></span>
+              <strong>Slot 2: 12:55 PM</strong>
+              <span class="pill-tag heavy">Peak Crowd</span>
+            </div>
+            <div class="slot-pill-body">
+              <span>Cutoff: <strong>11:55 AM</strong></span>
+              <span class="slot-cap-info" id="slot2CapDisplay">45/60 Booked</span>
+            </div>
+            <div class="slot-timer" id="slot2TimerText">Rule Status: Open</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU SECTION (ENTERED BY CANTEEN INCHARGE) -->
+    <section class="menu-section">
+      <div class="container">
+        <div class="menu-header-bar">
+          <div>
+            <h2>Canteen Food Menu</h2>
+            <p>Fresh daily menu curated & entered by Chef Sundaram (Canteen Incharge). Stored in <code>MENU.xlsx</code>.</p>
+          </div>
+        </div>
+
+        <!-- CONTROLS & FILTER BAR -->
+        <div class="menu-toolbar">
+          <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="menuSearchInput" placeholder="Search biryani, thali, dosa, drinks...">
+          </div>
+
+          <!-- Category Chips -->
+          <div class="category-chips" id="categoryChips">
+            <button class="chip active" data-category="ALL">All Items</button>
+            <button class="chip" data-category="Rice & Biryani">Rice & Biryani</button>
+            <button class="chip" data-category="Thali & Meals">Thali & Meals</button>
+            <button class="chip" data-category="Combos">Combos</button>
+            <button class="chip" data-category="Quick Bites">Quick Bites</button>
+            <button class="chip" data-category="Beverages">Beverages</button>
+          </div>
+
+          <!-- Diet Filter Toggle -->
+          <div class="diet-toggles">
+            <button class="diet-btn active" data-diet="ALL">All</button>
+            <button class="diet-btn" data-diet="veg">🟢 Veg</button>
+            <button class="diet-btn" data-diet="non-veg">🔴 Non-Veg</button>
+          </div>
+        </div>
+
+        <!-- MENU GRID -->
+        <div class="menu-grid" id="menuGrid">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <!-- FEEDBACK CORNER HIGHLIGHT (PARTICULAR FOOD REVIEWS) -->
+        <div class="feedback-corner-card">
+          <div class="fc-header">
+            <div>
+              <h3>Feedback Corner for Particular Food</h3>
+              <p>Ratings and reviews submitted by students & faculty for specific menu items.</p>
+            </div>
+            <button class="btn-primary" id="btnWriteFeedback">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Rate a Particular Food
+            </button>
+          </div>
+          <div class="fc-stats-row" id="feedbackStatsBar">
+            <!-- Rendered dynamically -->
+          </div>
+          <div class="fc-reviews-list" id="feedbackReviewsMiniList">
+            <!-- Recent reviews -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================================================== -->
+  <!-- VIEW 3: CANTEEN INCHARGE / OWNER DASHBOARD -->
+  <!-- ==================================================== -->
+  <main id="adminView" class="view-section">
+    <div class="admin-header-bar">
+      <div class="container admin-header-flex">
+        <div>
+          <h2>Canteen Incharge Command & Kitchen Dispatch</h2>
+          <p>Entered food items, real-time batch manifests, staff phone stream, token counter verification & Excel sync</p>
+        </div>
+        <div class="admin-quick-actions">
+          <button class="btn-warning-outline" id="btnResetDailyStock">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Refill Daily Stock
+          </button>
+          <button class="btn-primary" id="btnAddNewMenuItem">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            + Add New Menu Item
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN SUB-TABS -->
+    <div class="admin-subnav">
+      <div class="container admin-tabs-flex">
+        <button class="admin-tab active" data-subtab="kitchenBatch">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/><line x1="6" y1="17" x2="18" y2="17"/></svg>
+          Kitchen Batch Preparation
+        </button>
+        <button class="admin-tab" data-subtab="tokenVerification">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+          Counter Token Verification
+        </button>
+        <button class="admin-tab" data-subtab="inventoryControl">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-7"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+          Menu & Inventory (Incharge)
+        </button>
+        <button class="admin-tab" data-subtab="feedbackAnalytics">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-6"/><path d="M6 20V10"/><path d="M18 20V4"/></svg>
+          Food-Specific Feedback Ratings
+        </button>
+        <button class="admin-tab" data-subtab="systemToggles">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Excel & System Controls
+        </button>
+      </div>
+    </div>
+
+    <div class="container admin-content">
+      <!-- SUBTAB 1: KITCHEN BATCH PREPARATION -->
+      <div id="subtabKitchenBatch" class="admin-subview active">
+        <div class="batch-summary-header">
+          <div>
+            <h3>Batch Cooking Manifest (Sorted By Lunch Shifts)</h3>
+            <p>Aggregated portion counts so cooks know exact batch volumes ahead of time.</p>
+          </div>
+          <button class="btn-secondary" id="btnRefreshBatch">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Refresh Counts
+          </button>
+        </div>
+
+        <div class="batch-slots-grid">
+          <!-- Slot 1 Batch Card -->
+          <div class="batch-card" id="batchSlot1Card">
+            <div class="batch-card-header slot-header-1">
+              <div class="slot-title-badge">
+                <span class="badge-slot-num">SLOT 1</span>
+                <h4>12:05 PM (Early Window)</h4>
+              </div>
+              <div class="batch-stat-pill">
+                <span id="batchSlot1TotalOrders">0</span> Orders | <strong id="batchSlot1TotalPlates">0</strong> Plates
+              </div>
+            </div>
+            <div class="batch-table-container">
+              <table class="batch-table">
+                <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Required Plates</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="batchSlot1TableBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Slot 2 Batch Card -->
+          <div class="batch-card" id="batchSlot2Card">
+            <div class="batch-card-header slot-header-2">
+              <div class="slot-title-badge">
+                <span class="badge-slot-num">SLOT 2</span>
+                <h4>12:55 PM (Peak Window)</h4>
+              </div>
+              <div class="batch-stat-pill">
+                <span id="batchSlot2TotalOrders">0</span> Orders | <strong id="batchSlot2TotalPlates">0</strong> Plates
+              </div>
+            </div>
+            <div class="batch-table-container">
+              <table class="batch-table">
+                <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Required Plates</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="batchSlot2TableBody">
+                  <!-- Populated via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT INCOMING ORDERS FEED -->
+        <div class="orders-manifest-section">
+          <h3>All Pre-Orders for Today (Saved to MENU.xlsx)</h3>
+          <div class="orders-table-wrapper">
+            <table class="orders-table">
+              <thead>
+                <tr>
+                  <th>Token Code</th>
+                  <th>Customer</th>
+                  <th>Role</th>
+                  <th>Slot</th>
+                  <th>Items & Qty</th>
+                  <th>Amount</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="adminOrdersTableBody">
+                <!-- Orders rendered here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBTAB 2: COUNTER TOKEN VERIFICATION -->
+      <div id="subtabTokenVerification" class="admin-subview">
+        <div class="counter-verification-layout">
+          <div class="counter-scan-panel">
+            <h3>Counter Token Verification Check-Off</h3>
+            <p>Verify customer date-matched token against physical food tray pickup to eliminate fraud and double claiming.</p>
+            
+            <form id="tokenLookupForm" class="token-input-box">
+              <label for="tokenCodeInput">Enter or Scan Token Code:</label>
+              <div class="lookup-input-row">
+                <input type="text" id="tokenCodeInput" placeholder="e.g. TKN-1205-9821" autocomplete="off" required>
+                <button type="submit" class="btn-primary" id="btnVerifyToken">Verify Token</button>
+              </div>
+              <div class="quick-tokens-chips">
+                <span class="sim-label">Quick Demo Tokens:</span>
+                <button type="button" class="btn-chip" onclick="quickFillToken('TKN-1205-9821')">TKN-1205-9821 (Active Slot 1)</button>
+                <button type="button" class="btn-chip" onclick="quickFillToken('TKN-1255-9823')">TKN-1255-9823 (Active Slot 2)</button>
+                <button type="button" class="btn-chip" onclick="quickFillToken('TKN-1205-9818')">TKN-1205-9818 (Already Redeemed)</button>
+              </div>
+            </form>
+
+            <div id="tokenVerificationResult" class="token-result-card hidden">
+              <!-- Result filled dynamically -->
+            </div>
+          </div>
+
+          <div class="counter-live-stream">
+            <h3>Staff Kitchen Phone Stream 📲</h3>
+            <p>Live alert stream dispatched to canteen kitchen staff's mobile device:</p>
+            <div class="pickup-feed" id="staffPhoneAlertsFeed">
+              <!-- Rendered items -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBTAB 3: INVENTORY & STOCK LIMITS (INCHARGE MENU) -->
+      <div id="subtabInventoryControl" class="admin-subview">
+        <div class="inventory-header">
+          <div>
+            <h3>Menu Items Entered by Canteen Incharge</h3>
+            <p>Add new dishes, update plate prices, and configure daily batch limits. Saved directly to <code>MENU.xlsx</code> (Menu_Catalog sheet).</p>
+          </div>
+          <button class="btn-primary" id="btnOpenAddItemModal">
+            + Add New Menu Item
+          </button>
+        </div>
+
+        <div class="inventory-grid" id="adminInventoryGrid">
+          <!-- Rendered items -->
+        </div>
+      </div>
+
+      <!-- SUBTAB 4: FEEDBACK & QUALITY RATINGS -->
+      <div id="subtabFeedbackAnalytics" class="admin-subview">
+        <div class="feedback-admin-header">
+          <h3>Food-Specific Feedback Analysis</h3>
+          <p>Continuous feedback metrics submitted by students & faculty for meal quality and portion quantity. Stored in <code>MENU.xlsx</code> (Food_Feedback sheet).</p>
+        </div>
+
+        <div class="feedback-metrics-grid">
+          <div class="metric-card">
+            <span class="metric-title">Overall Satisfaction</span>
+            <div class="metric-val" id="metricOverallScore">4.7 <span class="metric-max">/ 5.0</span></div>
+            <div class="stars-gold" id="metricOverallStars">★★★★★</div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-title">Food Quantity Rating</span>
+            <div class="metric-val" id="metricQuantityScore">4.7 <span class="metric-max">/ 5.0</span></div>
+            <span class="metric-sub">Portion size satisfaction</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-title">Food Quality Rating</span>
+            <div class="metric-val" id="metricQualityScore">4.7 <span class="metric-max">/ 5.0</span></div>
+            <span class="metric-sub">Freshness & hygiene score</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-title">Total Verified Reviews</span>
+            <div class="metric-val" id="metricTotalReviews">3</div>
+            <span class="metric-sub">Post-consumption submissions</span>
+          </div>
+        </div>
+
+        <div class="admin-feedback-feed" id="adminFeedbackList">
+          <!-- Feedback list -->
+        </div>
+      </div>
+
+      <!-- SUBTAB 5: SYSTEM CONTROL TOGGLES & EXCEL SYNC -->
+      <div id="subtabSystemToggles" class="admin-subview">
+        <div class="toggles-container">
+          <div class="toggle-card">
+            <div class="toggle-info">
+              <div class="toggle-badge" style="background: #dcfce7; color: #15803d;">Excel Spreadsheet Database</div>
+              <h4>Local Excel Data Synchronization</h4>
+              <p>The system stores all customer & owner credentials directly into <code>login_details.xlsx</code> and orders & menu items into <code>MENU.xlsx</code>.</p>
+              <div style="margin-top: 0.6rem; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                <div>📁 <strong>Users Database:</strong> <code>C:\Users\Pranesh\OneDrive\Documents\login_details.xlsx</code> (<span id="excelUsersStatus">Loading...</span>)</div>
+                <div>📁 <strong>Menu & Orders Database:</strong> <code>C:\Users\Pranesh\OneDrive\Documents\MENU.xlsx</code> (<span id="excelMenuStatus">Loading...</span>)</div>
+              </div>
+            </div>
+            <div>
+              <button class="btn-secondary" id="btnManualExcelSync">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                Sync Excel Now
+              </button>
+            </div>
+          </div>
+
+          <div class="toggle-card">
+            <div class="toggle-info">
+              <div class="toggle-badge holiday">Sunday / Holiday Mode</div>
+              <h4>Disable Pre-Orders for Holidays & Weekends</h4>
+              <p>When toggled ON, a prominent "Canteen Closed" banner is displayed to all students/faculty and checkout is locked.</p>
+              <div class="input-reason-box">
+                <label>Holiday Reason / Banner Notice:</label>
+                <input type="text" id="toggleHolidayReason" value="Sunday / Scheduled Campus Holiday. Canteen pre-ordering is currently offline.">
+              </div>
+            </div>
+            <div class="toggle-switch-wrapper">
+              <label class="switch">
+                <input type="checkbox" id="chkHolidayMode">
+                <span class="slider round"></span>
+              </label>
+              <span class="switch-status" id="lblHolidayStatus">OFF</span>
+            </div>
+          </div>
+
+          <div class="toggle-card">
+            <div class="toggle-info">
+              <div class="toggle-badge event">Event / Cultural Day Mode</div>
+              <h4>Emergency App Disabler for Campus Events</h4>
+              <p>Emergency switch to temporarily disable ordering when college schedules are irregular, exams, or campus fests occur.</p>
+              <div class="input-reason-box">
+                <label>Emergency Event Banner Notice:</label>
+                <input type="text" id="toggleEventReason" value="Annual Tech Symposium 'INNOVENT 2026' in progress. Regular canteen pre-orders temporarily suspended.">
+              </div>
+            </div>
+            <div class="toggle-switch-wrapper">
+              <label class="switch">
+                <input type="checkbox" id="chkEventMode">
+                <span class="slider round"></span>
+              </label>
+              <span class="switch-status" id="lblEventStatus">OFF</span>
+            </div>
+          </div>
+
+          <div class="toggle-card">
+            <div class="toggle-info">
+              <div class="toggle-badge capacity">Slot Capacity Limits</div>
+              <h4>Kitchen Workload Balancing & Capacity Caps</h4>
+              <p>Adjust maximum plate capacity caps to prevent kitchen congestion and ensure food is ready on time.</p>
+              <div class="slot-cap-inputs">
+                <div class="cap-input-group">
+                  <label>Slot 1 (12:05 PM) Max Plates:</label>
+                  <input type="number" id="inputSlot1Cap" min="10" max="200" value="45">
+                </div>
+                <div class="cap-input-group">
+                  <label>Slot 2 (12:55 PM) Max Plates:</label>
+                  <input type="number" id="inputSlot2Cap" min="10" max="200" value="60">
+                </div>
+              </div>
+            </div>
+            <div class="save-caps-wrapper">
+              <button class="btn-primary" id="btnSaveSystemSettings">Save Settings</button>
+            </div>
+          </div>
+
+          <div class="toggle-card reset-card">
+            <div class="toggle-info">
+              <div class="toggle-badge reset">System Maintenance</div>
+              <h4>Reset System Demo Data</h4>
+              <p>Reset the entire database (orders, demo tokens, stock counts, feedback) back to clean initial states.</p>
+            </div>
+            <div>
+              <button class="btn-danger-outline" id="btnResetAllDemoData">Reset All Demo Data</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================================================== -->
+  <!-- STEP 3 & 4: MODAL CART, INCHARGE MESSAGE & CHECKOUT -->
+  <!-- ==================================================== -->
+  <div id="cartModal" class="modal-overlay hidden">
+    <div class="modal-drawer">
+      <div class="modal-header">
+        <h3>Your Lunch Pre-Order Tray</h3>
+        <button class="btn-close-modal" id="btnCloseCart">&times;</button>
+      </div>
+
+      <div class="modal-body cart-modal-body">
+        <!-- Cart Items List -->
+        <div id="cartItemsContainer" class="cart-items-list">
+          <!-- Populated via JS -->
+        </div>
+
+        <div id="cartEmptyState" class="cart-empty hidden">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <p>Your pre-order tray is empty.</p>
+          <span>Select meals from the menu to schedule lunch.</span>
+        </div>
+
+        <!-- TIME SLOT SELECTION & 1-HOUR ENFORCEMENT -->
+        <div id="checkoutSlotSection" class="checkout-slot-section">
+          <div class="section-badge-title">
+            <span class="step-num">Step 1</span>
+            <strong>Confirm Lunch Pickup Shift & Date</strong>
+          </div>
+
+          <!-- Date Selector (Today or Tomorrow) -->
+          <div class="order-date-picker">
+            <label>Pickup Date:</label>
+            <div class="date-buttons">
+              <button type="button" class="btn-date active" id="btnDateToday">Today (<span id="labelDateToday">Today</span>)</button>
+              <button type="button" class="btn-date" id="btnDateTomorrow">Tomorrow (Advance Order)</button>
+            </div>
+          </div>
+
+          <!-- Strict 1-Hour Advance Warning Box -->
+          <div class="rule-callout">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <div>
+              <strong>Strict 1-Hour Advance Rule Enforced:</strong>
+              <p>To avoid kitchen overload, orders must be confirmed at least 60 minutes prior to pickup window. Current campus time is <strong id="checkoutCurrentTime">10:30 AM</strong>.</p>
+            </div>
+          </div>
+
+          <!-- Lunch Slots Radio Cards -->
+          <div class="slot-radio-cards">
+            <!-- Slot 1 -->
+            <label class="slot-card" id="slotCard1">
+              <input type="radio" name="lunchSlot" value="slot1" id="radioSlot1" checked>
+              <div class="slot-card-inner">
+                <div class="slot-card-header">
+                  <span class="slot-name">Slot 1: 12:05 PM</span>
+                  <span class="slot-tag-light">Lighter Crowd</span>
+                </div>
+                <div class="slot-card-cutoff" id="slot1CutoffNotice">
+                  Cutoff: 11:05 AM (Open)
+                </div>
+                <div class="slot-card-capacity" id="slot1CapacityBar">
+                  <div class="cap-meter"><div class="cap-fill" style="width: 40%"></div></div>
+                  <span class="cap-text">18/45 Booked</span>
+                </div>
+              </div>
+            </label>
+
+            <!-- Slot 2 -->
+            <label class="slot-card" id="slotCard2">
+              <input type="radio" name="lunchSlot" value="slot2" id="radioSlot2">
+              <div class="slot-card-inner">
+                <div class="slot-card-header">
+                  <span class="slot-name">Slot 2: 12:55 PM</span>
+                  <span class="slot-tag-heavy">Peak Crowd</span>
+                </div>
+                <div class="slot-card-cutoff" id="slot2CutoffNotice">
+                  Cutoff: 11:55 AM (Open)
+                </div>
+                <div class="slot-card-capacity" id="slot2CapacityBar">
+                  <div class="cap-meter"><div class="cap-fill" style="width: 75%"></div></div>
+                  <span class="cap-text">45/60 Booked</span>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <div id="slotRuleErrorBanner" class="slot-error-banner hidden">
+            <!-- Displayed when slot cutoff has passed or slot is full -->
+          </div>
+        </div>
+
+        <!-- MESSAGE TO CANTEEN INCHARGE FEATURE -->
+        <div id="checkoutNotifyInchargeSection" class="checkout-notify-incharge-section">
+          <div class="section-badge-title">
+            <span class="step-num">Step 2</span>
+            <strong>Kitchen Alert: Message Canteen Incharge</strong>
+          </div>
+          <div class="incharge-dispatch-box">
+            <div class="dispatch-header">
+              <span class="chef-icon">👨‍🍳</span>
+              <div>
+                <strong>Canteen Incharge: Chef Sundaram M.</strong>
+                <small>Phone: +91 98765 43212 • Kitchen Station 1</small>
+              </div>
+            </div>
+            <p class="dispatch-note">Upon checkout, an automated preparation message will be dispatched directly to the kitchen incharge's phone and logged to <code>MENU.xlsx</code>.</p>
+            <div class="dispatch-preview" id="inchargeMessagePreview">
+              <em>"🔔 New Pre-Order Alert: Prepare selected dishes for your lunch shift."</em>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAYMENT METHOD SELECTION -->
+        <div id="checkoutPaymentSection" class="checkout-payment-section">
+          <div class="section-badge-title">
+            <span class="step-num">Step 3</span>
+            <strong>Sample Online Payment</strong>
+          </div>
+          <p class="pay-guarantee-note">Payment authorizes order and generates unique date-matched token.</p>
+
+          <div class="payment-options-grid">
+            <label class="pay-option active">
+              <input type="radio" name="payMethod" value="Sample UPI (QR Payment)" checked>
+              <div class="pay-option-content">
+                <span class="pay-icon">📱</span>
+                <div>
+                  <strong>Sample UPI QR Code Payment</strong>
+                  <small>Google Pay, PhonePe, Paytm, BHIM</small>
+                </div>
+              </div>
+            </label>
+
+            <label class="pay-option">
+              <input type="radio" name="payMethod" value="Campus Smartcard Wallet">
+              <div class="pay-option-content">
+                <span class="pay-icon">💳</span>
+                <div>
+                  <strong>Campus Smartcard Wallet</strong>
+                  <small>Tap & pay via college balance</small>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer cart-modal-footer">
+        <div class="cart-total-bar">
+          <div>
+            <span class="label">Total Amount:</span>
+            <span class="total-plates-info" id="cartTotalPlates">0 plates</span>
+          </div>
+          <div class="cart-price" id="cartTotalPrice">₹0</div>
+        </div>
+        <button class="btn-checkout" id="btnProceedPayment">
+          <span>Continue to Sample QR Payment & Token</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- STEP 4: STREAMLINED CHECKOUT & ORDER PLACEMENT -->
+  <!-- ==================================================== -->
+  <div id="paymentModal" class="modal-overlay hidden">
+    <div class="modal-card payment-gateway-card">
+      <div class="payment-header">
+        <div class="pay-shield">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h3>Scan & Pay to Place Order</h3>
+          <p>Direct UPI Payment to Canteen Owner</p>
+        </div>
+        <button class="btn-close-modal" id="btnClosePaymentHeader" style="margin-left: auto;">&times;</button>
+      </div>
+
+      <div class="payment-body">
+        <div class="pay-summary-box">
+          <div class="summary-line">
+            <span>Total Payable Amount:</span>
+            <strong id="payModalAmount" style="color: #16a34a; font-size: 1.25rem;">₹0</strong>
+          </div>
+          <div class="summary-line">
+            <span>Customer:</span>
+            <span id="payModalCustomer">-</span>
+          </div>
+          <div class="summary-line">
+            <span>Designated Shift:</span>
+            <span id="payModalSlot">Slot 1: 12:05 PM</span>
+          </div>
+        </div>
+
+        <div id="paymentFormSection">
+          <!-- UPI PAYMENT QR CODE -->
+          <div class="upi-mock-box">
+            <span class="upi-label">Scan to Pay with Any UPI App</span>
+            <div class="qr-sample-container">
+              <img id="samplePaymentQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&amp;data=upi%3A%2F%2Fpay%3Fpa%3Dcampus.canteen%40okhdfcbank%26pn%3DCampus%20Canteen%26cu%3DINR" alt="Sample UPI Payment QR Code">
+              <span class="qr-upi-id">UPI ID: <strong>campus.canteen@okhdfcbank</strong></span>
+            </div>
+            <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 0.65rem; margin-top: 0.6rem; font-size: 0.8rem; color: #166534; text-align: center;">
+              📱 Scan the QR code with GPay, PhonePe, or Paytm to pay directly, then click <strong>Place Order</strong> below.
+            </div>
+          </div>
+
+          <button class="btn-pay-now" id="btnConfirmPayment" style="margin-top: 1rem; font-size: 1.05rem; padding: 0.9rem;">
+            🛍️ Place Order
+          </button>
+          <button class="btn-cancel-pay" id="btnCancelPayment">Back to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- STEP 5: DIGITAL TOKEN WITH UNIQUE NUMBER & LIVE DATE -->
+  <!-- ==================================================== -->
+  <div id="tokenModal" class="modal-overlay hidden">
+    <div class="modal-card token-presentation-card">
+      <div class="token-banner">
+        <button class="btn-modal-close-round" id="btnCloseTokenHeader" title="Close Pass">&times;</button>
+        <div class="token-stamp">CONFIRMED PRE-ORDER</div>
+        <h2>Cambit Lunch Pass</h2>
+        <p>Present this unique digital token at the pickup counter</p>
+      </div>
+
+      <div class="token-inner">
+        <!-- UNIQUE NUMBER -->
+        <div class="token-code-display" id="tokenDisplayCode">
+          TKN-1205-9821
+        </div>
+
+        <div class="token-qr-wrapper">
+          <img id="tokenQrImage" src="" alt="Digital Token QR Code">
+          <span class="qr-caption">Scan at counter barcode scanner</span>
+        </div>
+
+        <div class="token-details-grid">
+          <div class="token-cell">
+            <span class="cell-label">Lunch Shift</span>
+            <strong id="tokenDisplaySlot" class="cell-val">12:05 PM (Slot 1)</strong>
+          </div>
+          <div class="token-cell">
+            <span class="cell-label">Live Date</span>
+            <strong id="tokenDisplayDate" class="cell-val">Today</strong>
+          </div>
+          <div class="token-cell">
+            <span class="cell-label">Total Plates</span>
+            <strong id="tokenDisplayPlates" class="cell-val">1 Plate</strong>
+          </div>
+          <div class="token-cell">
+            <span class="cell-label">Status</span>
+            <span id="tokenDisplayStatusBadge" class="token-status-pill active">PREPARING (QUEUED)</span>
+          </div>
+        </div>
+
+        <div class="token-items-list" id="tokenDisplayItems">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- NOTIFICATION TO CANTEEN STAFF PHONE BANNER -->
+        <div class="staff-dispatched-card">
+          <div class="staff-alert-icon">📲</div>
+          <div class="staff-alert-text">
+            <strong>Sent to Canteen Staff Phone:</strong>
+            <span>Alert dispatched to Chef Sundaram (+91 98765 43212) to begin batch cooking for your shift.</span>
+          </div>
+        </div>
+
+        <div class="token-footer-meta">
+          <span>Customer: <strong id="tokenDisplayCustomer">-</strong></span>
+          <span>Txn Ref: <strong id="tokenDisplayTxn">-</strong></span>
+        </div>
+      </div>
+
+      <div class="token-actions">
+        <button class="btn-secondary" id="btnCancelTokenModal">Close Pass</button>
+        <button class="btn-print" onclick="window.print()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print Slip
+        </button>
+        <button class="btn-primary" id="btnCloseTokenModal">Done & Back to Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL: MY TOKENS DRAWER -->
+  <!-- ==================================================== -->
+  <div id="myTokensModal" class="modal-overlay hidden">
+    <div class="modal-drawer">
+      <div class="modal-header">
+        <h3>My Active Digital Tokens</h3>
+        <button class="btn-close-modal" id="btnCloseMyTokens">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="tokens-intro">Display your token QR or unique number at the counter during your shift.</p>
+        <div id="myTokensList" class="my-tokens-container">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- STEP 6: FEEDBACK CORNER FOR PARTICULAR FOOD -->
+  <!-- ==================================================== -->
+  <div id="feedbackModal" class="modal-overlay hidden">
+    <div class="modal-card feedback-form-card">
+      <div class="modal-header">
+        <h3>Rate a Particular Food Item</h3>
+        <button class="btn-close-modal" id="btnCloseFeedbackModal">&times;</button>
+      </div>
+
+      <form id="feedbackForm" class="feedback-form">
+        <!-- PARTICULAR FOOD SELECTION -->
+        <div class="form-group">
+          <label>1. Select the Particular Food Item you consumed:</label>
+          <select id="fbParticularFoodSelect" required>
+            <!-- Populated dynamically from menu items -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>2. Associated Pre-Order Token (Optional):</label>
+          <select id="fbTokenSelect">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <!-- Food Quantity Rating -->
+        <div class="rating-group">
+          <label>3. Food Quantity (Portion Size):</label>
+          <div class="star-rating" data-name="quantityRating" id="starGroupQuantity">
+            <span class="star active" data-val="1">★</span>
+            <span class="star active" data-val="2">★</span>
+            <span class="star active" data-val="3">★</span>
+            <span class="star active" data-val="4">★</span>
+            <span class="star active" data-val="5">★</span>
+          </div>
+          <small class="rating-caption">5 Stars = Generous & filling portion size</small>
+        </div>
+
+        <!-- Food Quality Rating -->
+        <div class="rating-group">
+          <label>4. Food Quality & Taste (Freshness / Hygiene):</label>
+          <div class="star-rating" data-name="qualityRating" id="starGroupQuality">
+            <span class="star active" data-val="1">★</span>
+            <span class="star active" data-val="2">★</span>
+            <span class="star active" data-val="3">★</span>
+            <span class="star active" data-val="4">★</span>
+            <span class="star active" data-val="5">★</span>
+          </div>
+          <small class="rating-caption">5 Stars = Delicious, fresh & hygienic</small>
+        </div>
+
+        <div class="form-group">
+          <label>5. Review & Chef Feedback for this Dish:</label>
+          <textarea id="fbComments" rows="3" placeholder="Tell the chef how this particular dish tasted, spice level, freshness, or improvements..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary btn-block">Submit Dish Review & Save to MENU.xlsx</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL: ADD / EDIT MENU ITEM (CANTEEN INCHARGE) -->
+  <!-- ==================================================== -->
+  <div id="menuItemModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="menuItemModalTitle">Add New Food Item (Canteen Incharge)</h3>
+        <button class="btn-close-modal" id="btnCloseMenuItemModal">&times;</button>
+      </div>
+      <form id="menuItemForm" class="modal-form">
+        <input type="hidden" id="editMenuItemId">
+        <div class="form-group">
+          <label>Food Item Name:</label>
+          <input type="text" id="itemFormName" placeholder="e.g. Paneer Butter Masala Combo" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category:</label>
+            <select id="itemFormCategory">
+              <option value="Rice & Biryani">Rice & Biryani</option>
+              <option value="Thali & Meals">Thali & Meals</option>
+              <option value="Combos">Combos</option>
+              <option value="Quick Bites">Quick Bites</option>
+              <option value="Beverages">Beverages</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Dietary Type:</label>
+            <select id="itemFormType">
+              <option value="veg">🟢 Vegetarian</option>
+              <option value="non-veg">🔴 Non-Vegetarian</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Price (₹):</label>
+            <input type="number" id="itemFormPrice" min="5" max="1000" placeholder="120" required>
+          </div>
+          <div class="form-group">
+            <label>Daily Stock Limit (Plates):</label>
+            <input type="number" id="itemFormLimit" min="1" max="500" placeholder="40" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Current Stock (Remaining):</label>
+          <input type="number" id="itemFormStock" min="0" max="500" placeholder="40" required>
+        </div>
+        <div class="form-group">
+          <label>Description:</label>
+          <textarea id="itemFormDesc" rows="2" placeholder="Ingredients and details..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Image URL:</label>
+          <input type="url" id="itemFormImage" placeholder="https://..." value="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80">
+        </div>
+        <button type="submit" class="btn-primary btn-block" id="btnSaveMenuItem">Save Item to MENU.xlsx</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MOBILE PWA APP INSTALL BANNER -->
+  <div id="pwaInstallBanner" class="pwa-install-banner hidden">
+    <div class="pwa-banner-left">
+      <div class="pwa-app-icon">🍔</div>
+      <div class="pwa-app-info">
+        <strong>Install Cambit App</strong>
+        <span>1-tap ordering & live token updates</span>
+      </div>
+    </div>
+    <div class="pwa-banner-actions">
+      <button id="btnPwaInstall" class="btn-pwa-install">Install</button>
+      <button id="btnPwaDismiss" class="btn-pwa-close" title="Dismiss">✕</button>
+    </div>
+  </div>
+
+
+  <!-- CONVENIENT MOBILE BOTTOM NAVIGATION BAR -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <button class="bottom-nav-item active" id="btnNavMenu" title="Menu">
+      <span class="nav-icon">🍽️</span>
+      <span class="nav-label">Menu</span>
+    </button>
+    <button class="bottom-nav-item" id="btnNavTokens" title="Tokens">
+      <span class="nav-icon">🎟️<span class="nav-badge hidden" id="mobileTokensBadge">0</span></span>
+      <span class="nav-label">Tokens</span>
+    </button>
+    <button class="bottom-nav-item" id="btnNavCart" title="Cart">
+      <span class="nav-icon">🛒<span class="nav-badge hidden" id="mobileCartNavBadge">0</span></span>
+      <span class="nav-label">Cart</span>
+    </button>
+    <button class="bottom-nav-item" id="btnNavFeedback" title="Reviews">
+      <span class="nav-icon">⭐</span>
+      <span class="nav-label">Reviews</span>
+    </button>
+    <button class="bottom-nav-item" id="btnNavProfile" title="Profile">
+      <span class="nav-icon">👤</span>
+      <span class="nav-label" id="mobileNavProfileLabel">Account</span>
+    </button>
+  </nav>
+
+  <!-- TOAST NOTIFICATIONS CONTAINER -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- JAVASCRIPT APPLICATION -->
+  <script src="app.js"></script>
+</body>
+</html>

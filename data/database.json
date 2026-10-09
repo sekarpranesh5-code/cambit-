@@ -1,0 +1,497 @@
+{
+  "system": {
+    "holidayMode": false,
+    "eventMode": false,
+    "holidayReason": "Sunday / Scheduled Campus Holiday. Canteen pre-ordering is currently offline.",
+    "eventReason": "Annual Tech Symposium 'INNOVENT 2026' in progress. Regular canteen pre-orders temporarily suspended.",
+    "slot1": {
+      "id": "slot1",
+      "name": "Slot 1: 12:05 PM",
+      "time": "12:05",
+      "cutoffTime": "11:05",
+      "description": "Lighter crowd window (Early Lunch)",
+      "capacity": 45
+    },
+    "slot2": {
+      "id": "slot2",
+      "name": "Slot 2: 12:55 PM",
+      "time": "12:55",
+      "cutoffTime": "11:55",
+      "description": "Heavy crowd window (Peak Lunch)",
+      "capacity": 10255
+    },
+    "useSimulationTime": true,
+    "simulationTime": "10:30",
+    "simulationDate": "2026-10-09"
+  },
+  "menu": [
+    {
+      "id": "menu-1",
+      "name": "Hyderabadi Chicken Dum Biryani",
+      "category": "Rice & Biryani",
+      "type": "non-veg",
+      "price": 140,
+      "stock": 41,
+      "dailyLimit": 50,
+      "description": "Authentic dum-cooked spiced basmati rice with tender marinated chicken, served with onion raita & mirchi ka salan.",
+      "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80",
+      "tag": "Bestseller"
+    },
+    {
+      "id": "menu-2",
+      "name": "Royal Paneer Dum Biryani",
+      "category": "Rice & Biryani",
+      "type": "veg",
+      "price": 120,
+      "stock": 30,
+      "dailyLimit": 40,
+      "description": "Aromatic basmati rice layered with seasoned paneer cubes, saffron, mint and crispy fried onions.",
+      "image": "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=500&auto=format&fit=crop&q=80",
+      "tag": "Popular"
+    },
+    {
+      "id": "menu-3",
+      "name": "South Indian Executive Thali",
+      "category": "Thali & Meals",
+      "type": "veg",
+      "price": 90,
+      "stock": 51,
+      "dailyLimit": 45,
+      "description": "Steamed Ponni rice, Sambar, Rasam, Kara Kuzhambu, Poriyal, Kootu, Appalam, Curd & Payasam sweet.",
+      "image": "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=500&auto=format&fit=crop&q=80",
+      "tag": "Healthy"
+    },
+    {
+      "id": "menu-4",
+      "name": "Deluxe North Indian Thali",
+      "category": "Thali & Meals",
+      "type": "veg",
+      "price": 130,
+      "stock": 28,
+      "dailyLimit": 35,
+      "description": "Paneer Butter Masala, Dal Makhani, 3 Soft Butter Rotis, Jeera Rice, Salad, Pickle & Gulab Jamun.",
+      "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop&q=80",
+      "tag": "Chef Special"
+    },
+    {
+      "id": "menu-5",
+      "name": "Schezwan Veg Fried Rice & Manchurian",
+      "category": "Combos",
+      "type": "veg",
+      "price": 105,
+      "stock": 22,
+      "dailyLimit": 30,
+      "description": "Spicy wok-tossed Schezwan vegetable rice served with 4 vegetable Manchurian balls in rich savory gravy.",
+      "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500&auto=format&fit=crop&q=80",
+      "tag": "Campus Hit"
+    },
+    {
+      "id": "menu-6",
+      "name": "Egg Fried Rice & Chilli Chicken",
+      "category": "Combos",
+      "type": "non-veg",
+      "price": 135,
+      "stock": 19,
+      "dailyLimit": 25,
+      "description": "Fluffy egg fried rice paired with spicy Indo-Chinese dry chilli chicken with bell peppers & spring onions.",
+      "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&auto=format&fit=crop&q=80",
+      "tag": "Staff Choice"
+    },
+    {
+      "id": "menu-7",
+      "name": "Ghee Podi Masala Dosa",
+      "category": "Quick Bites",
+      "type": "veg",
+      "price": 65,
+      "stock": 14,
+      "dailyLimit": 25,
+      "description": "Golden crispy crepe smeared with aromatic gunpowder podi and desi ghee, stuffed with seasoned potato masala.",
+      "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop&q=80",
+      "tag": "Crispy"
+    },
+    {
+      "id": "menu-8",
+      "name": "Crispy Samosa Chaat (2 Pcs)",
+      "category": "Quick Bites",
+      "type": "veg",
+      "price": 50,
+      "stock": 0,
+      "dailyLimit": 30,
+      "description": "Crushed potato samosas topped with warm chana masala, sweet tamarind chutney, spicy mint chutney & sev.",
+      "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop&q=80",
+      "tag": "Sold Out Demo"
+    },
+    {
+      "id": "menu-9",
+      "name": "Chilled Mango Lassi (300ml)",
+      "category": "Beverages",
+      "type": "veg",
+      "price": 45,
+      "stock": 24,
+      "dailyLimit": 30,
+      "description": "Thick, creamy yogurt shake prepared with sweet Alphonso mango pulp, cardamom, and pistachio slivers.",
+      "image": "https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=500&auto=format&fit=crop&q=80",
+      "tag": "Chilled"
+    },
+    {
+      "id": "menu-10",
+      "name": "Cold-Pressed Sweet Lime Juice",
+      "category": "Beverages",
+      "type": "veg",
+      "price": 40,
+      "stock": 36,
+      "dailyLimit": 25,
+      "description": "Freshly squeezed sweet lime (Mosambi) juice with black salt and a dash of chaat masala. Zero added sugar.",
+      "image": "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=500&auto=format&fit=crop&q=80",
+      "tag": "Natural"
+    },
+    {
+      "id": "menu-1791551446717",
+      "name": "paneer buttrr masala",
+      "category": "Rice & Biryani",
+      "type": "veg",
+      "price": 257,
+      "stock": 40,
+      "dailyLimit": 40,
+      "description": "",
+      "image": "https://share.google/qjMMZHk0SZdgcDlIA",
+      "tag": "New"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-26516",
+      "tokenCode": "TKN-1205-3055",
+      "customerId": "STAFF-01",
+      "customerName": "Pranesh S",
+      "customerRole": "admin",
+      "customerEmail": "sekarpranesh5@gmail.com",
+      "orderDate": "2026-10-09",
+      "slotId": "slot1",
+      "slotName": "Slot 1: 12:05 PM",
+      "orderPlacedAt": "2026-10-09 10:30:00",
+      "items": [
+        {
+          "menuId": "menu-2",
+          "name": "Royal Paneer Dum Biryani",
+          "price": 120,
+          "quantity": 1
+        }
+      ],
+      "totalPlates": 1,
+      "totalAmount": 120,
+      "paymentStatus": "PAID",
+      "paymentMethod": "Sample UPI (QR Payment)",
+      "transactionId": "TXN-1V2DUP5U",
+      "tokenStatus": "ACTIVE",
+      "redeemedAt": null,
+      "verifiedBy": null,
+      "qrCodeUrl": "data:image/png;base64,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"
+    },
+    {
+      "id": "ORD-82054",
+      "tokenCode": "TKN-1205-4540",
+      "customerId": "USR-7454",
+      "customerName": "Pranesh S",
+      "customerRole": "admin",
+      "customerEmail": "sekarpranesh5@gmail.com",
+      "orderDate": "2026-10-10",
+      "slotId": "slot1",
+      "slotName": "Slot 1: 12:05 PM",
+      "orderPlacedAt": "2026-10-09 10:30:00",
+      "items": [
+        {
+          "menuId": "menu-2",
+          "name": "Royal Paneer Dum Biryani",
+          "price": 120,
+          "quantity": 1
+        }
+      ],
+      "totalPlates": 1,
+      "totalAmount": 120,
+      "paymentStatus": "PAID",
+      "paymentMethod": "Sample UPI (QR Payment)",
+      "transactionId": "TXN-L78LAO6T",
+      "tokenStatus": "ACTIVE",
+      "redeemedAt": null,
+      "verifiedBy": null,
+      "qrCodeUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAAAklEQVR4AewaftIAABAWSURBVO3BsZEly65lwdVhJQBI6AD9RYEOIKFBTXOTBibD8uapX69ju//5/gsROdJCRI61EJFjLUTkWAsROdZCRI61EJFjLUTkWAsROdZCRI71xSbz4DfoSp4wD97UlUzmwZ2u5E3mwVVXMpkHO7qSTzIPdnQlk3lw1ZVM5sFTXckd82DqSibz4DfoSu4sRORYCxE51kJEjrUQkWN98R90JZ9kHjxlHlx1JTvMg6kreaIr2WEe7OhKpq7kTlcymQeTeTB1JZN5cNWVTObBjq5kR1dypyuZzIOpK5nMg0/qSj7JPHhiISLHWojIsRYicqyFiBzri5eZB090JU+ZB0+YBzvMg6kreUtXMpkHk3kwdSV3zIMdXclkHkxdyZ2uZDIPJvNgR1dyZR68qSuZzINPMg+e6EreshCRYy1E5FgLETnWQkSO9cU/qiu5Mg+mruSTzIM3dSWTeXCnK5nMg6fMg6uuZEdXssM8mMyDq65kh3nwlq7kX7MQkWMtRORYCxE51heH6EqeMg+mruROVzKZB1NX8knmwQ7zYEdX8huZBzvMg6krmbqSf91CRI61EJFjLUTkWAsROdYXL+tKfgPz4KormcyDqSvZYR5MXckT5sGOruSJruQp82AyD97SlbylK5nMg6krmcyDqSv5pK7k/9pCRI61EJFjLUTkWAsROdYX/4F58Ft1JVfmwdSVTObB1JVM5sEd82DqSibzYOpKJvNg6kquzIMd5sHUlezoSq7Mg6krmcyDp7qSK/Ng6ko+yTyYupId5sFvtBCRYy1E5FgLETnWQkSO9cWmruRU5sHUlUzmwR3z4KmuZDIPnuhKfgPzYOpK7nQlk3kwdSWTeTB1JZN5cNWV7OhK/lcsRORYCxE51kJEjrUQkWN9sck8mLqSyTz4pK5k6kr+NebB1JVMXcmVeTCZB28yD+6YBzu6kh3mwZ2u5Cnz4C3mwSd1JW9ZiMixFiJyrIWIHGshIsf6YlNXsqMrmcyDJ7qSp8yDq65kMg+mrmQyD3Z0JXfMgx1dyQ7z4C1dyQ7z4E5XMpkHO8yDO13JZB7s6Eom8+A36ErumAc7upI7CxE51kJEjrUQkWP9+f6Lh8yDJ7qSyTzY0ZU8YR481ZVM5sHUlVyZB2/qSibz4E5XMpkHb+lKJvNg6kom82DqSu6YB1NXssM8eKIreZN58ERXMpkHU1dyZyEix1qIyLEWInKshYgc64tN5sHUlewwD67Mg6kr2WEePNGV7DAPJvNg6kre0pW8pSuZzIOpK9lhHkxdyZV5sMM82GEeTF3JVVcymQdTV7KjK5nMgzvmwVNdyWQe/KSFiBxrISLHWojIsRYicqw/33/xkHmwoyu5Mg+mrmQyD6auZDIPpq7kyjyYupJ/jXkwdSU7zIOpK5nMgye6kqfMgztdyVPmwdSV3DEPdnQlT5gHU1fyloWIHGshIsdaiMixFiJyrC9+gHlw1ZVM5sHUlUzmwdSV3OlKdpgHU1cymQdv6Uom82BHV3LHPNjRlUzmwZ2uZId5MHUlk3lwpyvZYR5MXckO8+CqK3nKPJi6ksk8uOpKPmkhIsdaiMixFiJyrIWIHOuLl3Uld8yDqSuZzIOnzIOrruQp82DqSibz4KormcyDyTyYupLJPJjMgztdyQ7zYOpKJvPgjnkwdSU7upJPMg+mruSJrmSHeTCZB28xD6au5M5CRI61EJFjLUTkWAsROdYXLzMPpq7kqivZ0ZVM5sET5sGOrmSHeTB1JU90JZN5sKMruTIPJvNgR1cymQe/kXkwdSVPmQc/rSuZzIMr82BHV/LEQkSOtRCRYy1E5Fh/vv/iIfNg6krumAdTVzKZB1NXMpkHd7qSHebBb9WVTObBVVfy08yDqSvZYR58UleywzyYupIr82DqSt5kHtzpSt6yEJFjLUTkWAsROdZCRI715/svNpgHU1cymQdTV3LHPJi6ksk8mLqSTzIPpq7kjnnwVFcymQdPdCWTeTB1JTvMgye6kh3mwdSVXJkHU1eywzx4oivZYR7s6Eom8+CqK/mkhYgcayEix1qIyLEWInKsP99/8SLzYOpKnjAPpq7kCfNgR1fylHlw1ZVM5sHUlUzmwdSVfJJ5MHUld8yDqSuZzIO3dCWTeTB1JU+ZB2/pSnaYB3e6ksk8mLqSOwsROdZCRI61EJFjLUTkWF+8rCt5S1cymQdTV/JEV/LTupLJPJi6ksk8uNOVTObBU+bB1JVcdSW/lXkwdSU7upInzIMd5sHUldwxD96yEJFjLUTkWAsROdZCRI715/svHjIPdnQlV+bB1JVM5sHUlUzmwdSV/K8wD57qSp4wD6auZDIPPqkrmcyDJ7qSyTyYupId5sEndSV3zIOpK5nMg6krubMQkWMtRORYCxE51kJEjvXn+y9eZB7c6Up+mnkwdSWTeTB1JZN5MHUld8yDqSvZYR7c6Uom8+CTupId5sFTXcmVeTB1JTvMg6krmcyDq65kh3nwVFdyxzyYupInFiJyrIWIHGshIsf68/0XG8wD+f+6ksk8uOpKnjIPpq5kMg/+NV3JHfNg6kqeMg/+V3Qlb1mIyLEWInKshYgcayEix/rz/RcPmQdv6UqeMg/udCU7zIOpK/kk82DqSibzYOpKrsyDqSt5yjyYupIr82DqSnaYB1NX8oR5MHUlO8yDqSu5Mg+mruQp8+AtXckTCxE51kJEjrUQkWMtRORYX2wyD57qSq7Mgx3mwdSV7OhKfiPzYOpKJvNg6kom8+AJ82DqSnaYB1ddyQ7zYOpKnjAPpq5kMg+mrmSHefCEeTB1JTu6kjvmwWQeTF3JnYWIHGshIsdaiMixFiJyrC/+g65kMg/e0pU8ZR480ZVM5sHUlUzmwRPmwdSVfFJX8hbzYOpKdpgHU1cymQd3zIOnupI75sGOruQp8+CqK/mkhYgcayEix1qIyLEWInKsP99/scE82NGVTObBT+tKrsyDHV3JDvNg6kreYh7s6EquzIPfqit5i3kwdSWTebCjK5nMg9+oK3nLQkSOtRCRYy1E5FgLETnWFz+gK7ljHkxdyQ7zYDIPrrqSHebBjq5kMg+uupKnupLJPJjMgye6kreYB1NX8ibz4KoreaormcyDO13Jm8yDt5gHU1dyZyEix1qIyLEWInKsL36AeXCnK5nMg6krmbqST+pKdnQlV+bBm7qSyTy46kp2mAdTV7LDPLjqSj6tK3miK5nMgx1dyRPmwdSV7OhKrsyDHV3JEwsROdZCRI61EJFjLUTkWH++/+JF5sHUldwxD6auZDIPPqkr+STzYEdX8hbzYOpKdpgHT3Qlk3kwdSWTeXCnK3mTeTB1JVfmwdSVPGUe3OlKJvNg6kqeWIjIsRYicqyFiBxrISLH+vP9FxvMg6kr+STzYOpKJvNg6kreYh68pSuZzIMdXclPMw/udCWTebCjK5nMg6kruTIP3tSV/K8wD3Z0JXcWInKshYgcayEix1qIyLH+fP/FQ+bBE13JTzMPdnQlk3kwdSVvMQ+mrmSHefBEVzKZB1NX8hbzYEdXMpkHV13JZB7s6EreYh481ZVM5sGdruQtCxE51kJEjrUQkWMtRORYX2wyD3Z0JXfMg6krmcyDqSvZYR5cdSU7zIOpK5nMgztdyVPmwRNdyWQe7OhKdpgHV13JZB7s6Ep2dCV3upLJPJjMg6kruWMe7OhKJvPgN1qIyLEWInKshYgcayEix/rz/RcfZh7c6Up2mAdTVzKZB3e6ksk8mLqSyTx4S1eywzx4oiuZzIMdXclbzIMdXclkHlx1JZN5sKMr2WEeXHUlv4F5sKMrubMQkWMtRORYCxE51p/vv3jIPJi6kreYB1NXssM8eKIr2WEeTF3JlXmwoyvZYR7c6Uom82BHV7LDPLjqSibzYEdX8knmwY6u5I55MHUlk3mwoyuZzIOrrmSHeTB1JXcWInKshYgcayEix1qIyLG++A+6ksk8eKIrmbqSyTzY0ZVcmQf/oq7kyjyYupLJPJjMg6krmbqSt5gHT3Qlk3nwlHkwdSVXXcmOruSpruSOefCWhYgcayEix1qIyLEWInKsLzaZB091JVfmwWQe7OhKJvPgk8yDJ7qSp8yDHebBVVcymQdvMg+uupKpK3nKPJi6kivzYOpKdpgHU1dyxzyYupLJPNjRlUzmwRNdyRMLETnWQkSOtRCRYy1E5Fhf/AddyVu6kqe6ksk8uNOVPNWVPGEe7OhKJvPgia5kMg+mrmQyD6au5AnzYOpKdpgHb+lKdpgHV13JZB7s6Ep+o4WIHGshIsdaiMixFiJyrC82dSWTeTB1JXe6ksk8eFNXcmUePNWVTObB/wrz4Kmu5I558JR5MHUlP808mLqSK/Ng6kom8+AtXckO82DqSu4sRORYCxE51kJEjrUQkWP9+f6Lh8yDJ7qSp8yDT+pKJvNg6kreYh5MXclkHrylK5nMg6kruWMevKkrmcyDt3QlbzEPpq5kh3nwRFfyloWIHGshIsdaiMixvthkHjzVlTxhHkxdyWQeTF3JHfPgTebBVVcymQdTVzKZB1NXMpkHT5gHO8yDJ7qSp8yDJ7qSyTyYzIOpK5nMgyfMg6e6kp+0EJFjLUTkWAsROdZCRI71xaau5Kd1JW8xD6auZEdXMpkHbzEPpq7kLV3JU+bBna5kh3kwdSVTVzKZB1ddyWQe7OhK3tKVPGUeTObBW7qSOwsROdZCRI61EJFjLUTkWF9sMg9+g65k6kom8+COebCjK9nRldzpSnaYB1NXMnUlV+bBDvNg6kreYh5MXckO82DqSp7oSibzYOpKpq7kyjzYYR5MXcmOruQnLUTkWAsROdZCRI61EJFjffEfdCWfZB7sMA+mruSOefAbmAdTVzKZB1NX8kRX8lRXcmUeTF3JZB5MXcnUlUzmwVVXMnUlk3kwdSWTefCWruQp8+CqK/mkhYgcayEix1qIyLEWInKsL15mHjzRlfxrzIMdXcmOrmQyD+6YB28yD666ksk82GEefFJX8knmwZu6kjvmwY6u5M5CRI61EJFjLUTkWAsROdYX/yjz4KoreVNXMpkHT5gHT3UlV+bBU13JW7qSyTzY0ZVM5sGVefBUVzJ1JXfMg6kreco8mMyDO13JZB48sRCRYy1E5FgLETnWF/+oruTKPJi6kh3mwdSVvKUr2WEeTObBna5kMg8m82DqSibz4KormcyDHV3Jjq7kyjzY0ZVM5sHUlUzmwVVX8pR5MHUlk3nwkxYicqyFiBxrISLHWojIsb54WVfy07qSO13Jm8yDqSu5Mg+eMg/eYh7s6Eo+qSv5pK5kMg92mAdTV/JJ5sGdruSTFiJyrIWIHGshIsdaiMixvvgPzIPfwDx4oiuZzIOpK5nMgztdyU/rSnaYB5N5MHUlU1dyZR5MXckO8+At5sHUlewwDybz4Kor+WnmwSctRORYCxE51kJEjrUQkWP9+f4LETnSQkSOtRCRYy1E5FgLETnWQkSOtRCRYy1E5FgLETnW/wOFg+iyk0CTCgAAAABJRU5ErkJggg=="
+    },
+    {
+      "id": "ORD-61842",
+      "tokenCode": "TKN-1205-7464",
+      "customerId": "USR-6165",
+      "customerName": "saranraj l",
+      "customerRole": "student",
+      "customerEmail": "vigneshkumarv943@gmail.com",
+      "orderDate": "2026-10-10",
+      "slotId": "slot1",
+      "slotName": "Slot 1: 12:05 PM",
+      "orderPlacedAt": "2026-10-09 10:30:00",
+      "items": [
+        {
+          "menuId": "menu-1",
+          "name": "Hyderabadi Chicken Dum Biryani",
+          "price": 140,
+          "quantity": 1
+        }
+      ],
+      "totalPlates": 1,
+      "totalAmount": 140,
+      "paymentStatus": "PAID",
+      "paymentMethod": "Sample UPI (QR Payment)",
+      "transactionId": "TXN-ON39E7B5",
+      "tokenStatus": "REDEEMED",
+      "redeemedAt": "2026-10-09 10:30",
+      "verifiedBy": "Chef Sundaram M.",
+      "qrCodeUrl": "data:image/png;base64,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"
+    },
+    {
+      "id": "ORD-9821",
+      "tokenCode": "TKN-1205-9821",
+      "customerId": "CS2023-084",
+      "customerName": "Aarav Sharma",
+      "customerRole": "student",
+      "customerEmail": "aarav.cs23@college.edu",
+      "orderDate": "2026-10-09",
+      "slotId": "slot1",
+      "slotName": "Slot 1: 12:05 PM",
+      "orderPlacedAt": "2026-10-09 10:12:00",
+      "items": [
+        {
+          "menuId": "menu-1",
+          "name": "Hyderabadi Chicken Dum Biryani",
+          "price": 140,
+          "quantity": 2
+        },
+        {
+          "menuId": "menu-9",
+          "name": "Chilled Mango Lassi (300ml)",
+          "price": 45,
+          "quantity": 2
+        }
+      ],
+      "totalPlates": 2,
+      "totalAmount": 370,
+      "paymentStatus": "PAID",
+      "paymentMethod": "UPI (Google Pay)",
+      "transactionId": "TXN-UPI-88492041",
+      "tokenStatus": "ACTIVE",
+      "redeemedAt": null,
+      "verifiedBy": null
+    },
+    {
+      "id": "ORD-9822",
+      "tokenCode": "TKN-1205-9822",
+      "customerId": "FAC-ECE-12",
+      "customerName": "Dr. Meenakshi Raman",
+      "customerRole": "faculty",
+      "customerEmail": "m.raman@college.edu",
+      "orderDate": "2026-10-09",
+      "slotId": "slot1",
+      "slotName": "Slot 1: 12:05 PM",
+      "orderPlacedAt": "2026-10-09 09:45:00",
+      "items": [
+        {
+          "menuId": "menu-3",
+          "name": "South Indian Executive Thali",
+          "price": 90,
+          "quantity": 1
+        }
+      ],
+      "totalPlates": 1,
+      "totalAmount": 90,
+      "paymentStatus": "PAID",
+      "paymentMethod": "Campus Smartcard",
+      "transactionId": "TXN-CARD-9921441",
+      "tokenStatus": "ACTIVE",
+      "redeemedAt": null,
+      "verifiedBy": null
+    },
+    {
+      "id": "ORD-9823",
+      "tokenCode": "TKN-1255-9823",
+      "customerId": "ME2022-105",
+      "customerName": "Rohan Varma",
+      "customerRole": "student",
+      "customerEmail": "rohan.me22@college.edu",
+      "orderDate": "2026-10-09",
+      "slotId": "slot2",
+      "slotName": "Slot 2: 12:55 PM",
+      "orderPlacedAt": "2026-10-09 10:40:00",
+      "items": [
+        {
+          "menuId": "menu-2",
+          "name": "Royal Paneer Dum Biryani",
+          "price": 120,
+          "quantity": 1
+        },
+        {
+          "menuId": "menu-5",
+          "name": "Schezwan Veg Fried Rice & Manchurian",
+          "price": 105,
+          "quantity": 1
+        }
+      ],
+      "totalPlates": 2,
+      "totalAmount": 225,
+      "paymentStatus": "PAID",
+      "paymentMethod": "UPI (PhonePe)",
+      "transactionId": "TXN-UPI-33910811",
+      "tokenStatus": "ACTIVE",
+      "redeemedAt": null,
+      "verifiedBy": null
+    },
+    {
+      "id": "ORD-9818",
+      "tokenCode": "TKN-1205-9818",
+      "customerId": "CS2023-019",
+      "customerName": "Pooja Krishnan",
+      "customerRole": "student",
+      "customerEmail": "pooja.cs23@college.edu",
+      "orderDate": "2026-10-09",
+      "slotId": "slot1",
+      "slotName": "Slot 1: 12:05 PM",
+      "orderPlacedAt": "2026-10-09 09:20:00",
+      "items": [
+        {
+          "menuId": "menu-4",
+          "name": "Deluxe North Indian Thali",
+          "price": 130,
+          "quantity": 1
+        }
+      ],
+      "totalPlates": 1,
+      "totalAmount": 130,
+      "paymentStatus": "PAID",
+      "paymentMethod": "UPI (Paytm)",
+      "transactionId": "TXN-UPI-11940293",
+      "tokenStatus": "REDEEMED",
+      "redeemedAt": "2026-10-09 12:08:15",
+      "verifiedBy": "Counter 2 (Kavitha S.)"
+    }
+  ],
+  "feedbacks": [
+    {
+      "id": "FB-101",
+      "orderId": "ORD-9818",
+      "tokenCode": "TKN-1205-9818",
+      "foodName": "Deluxe North Indian Thali",
+      "customerName": "Pooja Krishnan",
+      "customerRole": "student",
+      "customerId": "CS2023-019",
+      "orderDate": "2026-10-09",
+      "slotName": "Slot 1: 12:05 PM",
+      "quantityRating": 5,
+      "qualityRating": 5,
+      "comment": "North Indian Thali portion was very generous! Rotis were piping hot and paneer gravy was rich. Pre-ordering saved 25 minutes of break time.",
+      "createdAt": "2026-10-09 12:45:00"
+    },
+    {
+      "id": "FB-102",
+      "orderId": "ORD-9810",
+      "tokenCode": "TKN-1255-9810",
+      "foodName": "South Indian Executive Thali",
+      "customerName": "Prof. Arvind Swaminathan",
+      "customerRole": "faculty",
+      "customerId": "FAC-MECH-04",
+      "orderDate": "2026-10-09",
+      "slotName": "Slot 2: 12:55 PM",
+      "quantityRating": 4,
+      "qualityRating": 5,
+      "comment": "Excellent food quality and seamless token counter verification. App eliminated the peak lunch rush completely.",
+      "createdAt": "2026-10-09 13:20:00"
+    },
+    {
+      "id": "FB-103",
+      "orderId": "ORD-9805",
+      "tokenCode": "TKN-1205-9805",
+      "foodName": "Hyderabadi Chicken Dum Biryani",
+      "customerName": "Divya Nambiar",
+      "customerRole": "student",
+      "customerId": "BT2024-031",
+      "orderDate": "2026-10-09",
+      "slotName": "Slot 1: 12:05 PM",
+      "quantityRating": 5,
+      "qualityRating": 4,
+      "comment": "The Hyderabadi Chicken Biryani had generous pieces and aromatic basmati. Fast pickup with token QR scan.",
+      "createdAt": "2026-10-09 12:35:00"
+    }
+  ],
+  "users": [
+    {
+      "name": "Aarav Sharma",
+      "email": "aarav.cs23@college.edu",
+      "password": "student123",
+      "phone": "9876543210",
+      "role": "student",
+      "userType": "CUSTOMER",
+      "lunchSlot": "Slot 1: 12:05 PM",
+      "slotId": "slot1"
+    },
+    {
+      "name": "Dr. Meenakshi Raman",
+      "email": "m.raman@college.edu",
+      "password": "faculty123",
+      "phone": "9876543211",
+      "role": "faculty",
+      "userType": "CUSTOMER",
+      "lunchSlot": "Slot 1: 12:05 PM",
+      "slotId": "slot1"
+    },
+    {
+      "name": "Sundaram M. (Owner)",
+      "email": "canteen.owner@college.edu",
+      "password": "admin123",
+      "phone": "9876543212",
+      "role": "admin",
+      "userType": "CANTEEN_OWNER",
+      "lunchSlot": "Slot 1: 12:05 PM",
+      "slotId": "slot1"
+    },
+    {
+      "name": "Pranesh Sekar",
+      "email": "fdgdghc345@gmail.com",
+      "password": "1234567",
+      "phone": "1234567891",
+      "role": "admin",
+      "userType": "CANTEEN_OWNER",
+      "lunchSlot": "Slot 1: 12:05 PM",
+      "slotId": "slot1",
+      "id": "USR-2333"
+    },
+    {
+      "name": "saranraj l",
+      "email": "vigneshkumarv943@gmail.com",
+      "password": "1234",
+      "phone": "9344122323",
+      "role": "student",
+      "userType": "CUSTOMER",
+      "lunchSlot": "Slot 1: 12:05 PM",
+      "slotId": "slot1",
+      "id": "USR-6165"
+    },
+    {
+      "name": "SREEHARI P",
+      "email": "sree.prithiv0713@gmail.com",
+      "password": "443",
+      "phone": "08189939056",
+      "role": "student",
+      "userType": "CUSTOMER",
+      "lunchSlot": "Slot 1: 12:05 PM",
+      "slotId": "slot1",
+      "id": "USR-8059"
+    },
+    {
+      "name": "Pranesh S",
+      "email": "sekarpranesh5@gmail.com",
+      "password": "12345678",
+      "phone": "09025764496",
+      "role": "admin",
+      "userType": "CANTEEN_OWNER",
+      "lunchSlot": "Slot 1: 12:05 PM",
+      "slotId": "slot1",
+      "id": "USR-7454"
+    }
+  ]
+}
