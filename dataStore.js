@@ -3,7 +3,9 @@ const path = require('path');
 const QRCode = require('qrcode');
 const excelStore = require('./excelStore');
 
-const DATA_FILE = path.join(__dirname, 'data', 'database.json');
+const isVercel = Boolean(process.env.VERCEL);
+const LOCAL_DATA_FILE = path.join(__dirname, 'data', 'database.json');
+const DATA_FILE = isVercel ? path.join('/tmp', 'database.json') : LOCAL_DATA_FILE;
 
 const DEFAULT_USERS = [
   {
@@ -354,11 +356,20 @@ class DataStore {
       if (fs.existsSync(DATA_FILE)) {
         const raw = fs.readFileSync(DATA_FILE, 'utf-8');
         this.data = JSON.parse(raw);
-        if (!this.data.users) {
-          this.data.users = DEFAULT_USERS;
+      } else if (fs.existsSync(LOCAL_DATA_FILE)) {
+        const raw = fs.readFileSync(LOCAL_DATA_FILE, 'utf-8');
+        this.data = JSON.parse(raw);
+        if (isVercel) {
+          try {
+            fs.writeFileSync(DATA_FILE, raw, 'utf-8');
+          } catch (e) {}
         }
       } else {
         this.resetToDefault();
+      }
+      if (!this.data || !this.data.users) {
+        if (!this.data) this.data = getInitialData();
+        if (!this.data.users) this.data.users = DEFAULT_USERS;
       }
       // Ensure both Excel files are seeded & synchronized
       excelStore.ensureSeeded(this.data.users || DEFAULT_USERS, this.data.orders, this.data.menu);
@@ -828,6 +839,11 @@ class DataStore {
   saveImageIfBase64(imageStr) {
     if (!imageStr || typeof imageStr !== 'string') return imageStr;
     if (!imageStr.startsWith('data:image/')) return imageStr;
+
+    // On Vercel / serverless environment, preserve base64 so images work without persistent server disk
+    if (isVercel) {
+      return imageStr;
+    }
 
     try {
       const uploadsDir = path.join(__dirname, 'public', 'uploads');

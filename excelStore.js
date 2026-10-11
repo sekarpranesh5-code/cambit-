@@ -2,13 +2,29 @@ const fs = require('fs');
 const path = require('path');
 const XLSX = require('xlsx');
 
-const LOGIN_DETAILS_PATH = 'C:\\Users\\Pranesh\\OneDrive\\Documents\\login_details.xlsx';
-const MENU_PATH = 'C:\\Users\\Pranesh\\OneDrive\\Documents\\MENU.xlsx';
+function resolveExcelPath(defaultWindowsPath, filename) {
+  try {
+    if (process.platform === 'win32' && fs.existsSync(path.dirname(defaultWindowsPath))) {
+      return defaultWindowsPath;
+    }
+  } catch (e) {}
+
+  const targetDir = process.env.VERCEL ? '/tmp' : path.join(__dirname, 'data');
+  if (!fs.existsSync(targetDir)) {
+    try {
+      fs.mkdirSync(targetDir, { recursive: true });
+    } catch (e) {}
+  }
+  return path.join(targetDir, filename);
+}
+
+const DEFAULT_WINDOWS_LOGIN_PATH = 'C:\\Users\\Pranesh\\OneDrive\\Documents\\login_details.xlsx';
+const DEFAULT_WINDOWS_MENU_PATH = 'C:\\Users\\Pranesh\\OneDrive\\Documents\\MENU.xlsx';
 
 class ExcelStore {
   constructor() {
-    this.loginFilePath = LOGIN_DETAILS_PATH;
-    this.menuFilePath = MENU_PATH;
+    this.loginFilePath = resolveExcelPath(DEFAULT_WINDOWS_LOGIN_PATH, 'login_details.xlsx');
+    this.menuFilePath = resolveExcelPath(DEFAULT_WINDOWS_MENU_PATH, 'MENU.xlsx');
   }
 
   // ========================================================

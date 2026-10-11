@@ -107,6 +107,11 @@ app.post('/api/upload', (req, res) => {
       return res.json({ success: true, imageUrl: image });
     }
 
+    // On Vercel / serverless environment, data URLs work without persistent disk
+    if (process.env.VERCEL) {
+      return res.json({ success: true, imageUrl: image });
+    }
+
     // Parse base64 Data URL
     const matches = image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
     if (!matches || matches.length !== 3) {
@@ -466,16 +471,20 @@ function getLocalIpAddresses() {
   return addresses;
 }
 
-app.listen(PORT, HOST, () => {
-  const ips = getLocalIpAddresses();
-  const hostName = os.hostname();
-  console.log(`=======================================================`);
-  console.log(`  🚀 Cambit Real-Time Canteen Pre-Order System LIVE!   `);
-  console.log(`  💻 Host Machine URL : http://localhost:${PORT}        `);
-  console.log(`  🌐 Network Link     : http://${hostName}.local:${PORT} `);
-  ips.forEach(i => {
-    console.log(`  📱 Mobile IP Link (${i.name}): http://${i.ip}:${PORT}`);
-    console.log(`  🔗 Captive Link   : http://${i.ip}:${PORT}/generate_204`);
+if (require.main === module) {
+  app.listen(PORT, HOST, () => {
+    const ips = getLocalIpAddresses();
+    const hostName = os.hostname();
+    console.log(`=======================================================`);
+    console.log(`  🚀 Cambit Real-Time Canteen Pre-Order System LIVE!   `);
+    console.log(`  💻 Host Machine URL : http://localhost:${PORT}        `);
+    console.log(`  🌐 Network Link     : http://${hostName}.local:${PORT} `);
+    ips.forEach(i => {
+      console.log(`  📱 Mobile IP Link (${i.name}): http://${i.ip}:${PORT}`);
+      console.log(`  🔗 Captive Link   : http://${i.ip}:${PORT}/generate_204`);
+    });
+    console.log(`=======================================================`);
   });
-  console.log(`=======================================================`);
-});
+}
+
+module.exports = app;

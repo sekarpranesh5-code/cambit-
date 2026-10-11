@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/generate_204",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/gen_204",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/cambit",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/canteen",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/menu",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/preorder",
+      "destination": "/index.html"
+    }
+  ]
+}
