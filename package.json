@@ -2,6 +2,7 @@
   "name": "canteen-preorder-system",
   "version": "1.0.0",
   "description": "Cambit College Canteen Smart Pre-Order & Digital Token System",
+  "homepage": "https://cambit-9z7i.vercel.app/",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

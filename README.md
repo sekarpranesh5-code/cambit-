@@ -1,6 +1,33 @@
 # Cambit - College Canteen Pre-Order & Kitchen Management System
 
-A responsive web application for college campuses connecting students, faculty, and canteen kitchen management. Eliminates physical queues during lunch breaks by enforcing advance meal pre-orders and balancing kitchen batch preparation across designated lunch shifts.
+[![Live Demo on Vercel](https://img.shields.io/badge/Vercel-Live_Web_App-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://cambit-9z7i.vercel.app/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Installable-f97316?style=for-the-badge&logo=pwa&logoColor=white)](https://cambit-9z7i.vercel.app/)
+[![Cross Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Windows%20%7C%20Mac-blue?style=for-the-badge)](https://cambit-9z7i.vercel.app/)
+
+> 🚀 **Live Production Web Application**:  
+> 👉 **[https://cambit-9z7i.vercel.app/](https://cambit-9z7i.vercel.app/)**
+
+A responsive, high-performance web application for college campuses connecting students, faculty, and canteen kitchen management. Eliminates physical queues during lunch breaks by enforcing advance meal pre-orders, digital token verification, and balancing kitchen batch preparation across designated lunch shifts.
+
+---
+
+## 🌐 Instant Access Across All Devices
+
+The application is deployed on Vercel as a Progressive Web App (PWA):
+
+| Device / OS | How to Access & Install |
+| :--- | :--- |
+| **📱 Android Phone** | Open **[https://cambit-9z7i.vercel.app/](https://cambit-9z7i.vercel.app/)** in Chrome. Tap **"Install Cambit App"** banner or menu → *Add to Home screen* for native app experience. |
+| **🍎 iPhone (iOS)** | Open in Safari, tap the **Share** button, and select **"Add to Home Screen"**. |
+| **💻 Windows / Mac** | Open in any modern browser (Chrome, Edge, Safari). Click the **Install** icon in the address bar to install as a desktop app. |
+
+### 🔑 Demo Login Accounts
+
+| Role | Email | Password | Access Details |
+| :--- | :--- | :--- | :--- |
+| **Canteen Incharge (Owner)** | `sekarpranesh5@gmail.com` | `12345678` | Full Admin Dashboard, Live Kitchen Batch Manifest, Menu Item / Photo Manager |
+| **Student / Customer** | `aarav.cs23@college.edu` | `student123` | Digital Pre-Ordering, Slot Selection (12:05 PM / 12:55 PM), Token Generation |
+| **Faculty / Staff** | `m.raman@college.edu` | `faculty123` | Executive Lunch Pre-Orders & Priority Pickup |
 
 ---
 
