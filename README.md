@@ -21,13 +21,12 @@ The application is deployed on Vercel as a Progressive Web App (PWA):
 | **🍎 iPhone (iOS)** | Open in Safari, tap the **Share** button, and select **"Add to Home Screen"**. |
 | **💻 Windows / Mac** | Open in any modern browser (Chrome, Edge, Safari). Click the **Install** icon in the address bar to install as a desktop app. |
 
-### 🔑 Demo Login Accounts
+### 🔑 Account Access
 
 | Role | Email | Password | Access Details |
 | :--- | :--- | :--- | :--- |
 | **Canteen Incharge (Owner)** | `sekarpranesh5@gmail.com` | `12345678` | Full Admin Dashboard, Live Kitchen Batch Manifest, Menu Item / Photo Manager |
-| **Student / Customer** | `aarav.cs23@college.edu` | `student123` | Digital Pre-Ordering, Slot Selection (12:05 PM / 12:55 PM), Token Generation |
-| **Faculty / Staff** | `m.raman@college.edu` | `faculty123` | Executive Lunch Pre-Orders & Priority Pickup |
+| **Students & Faculty** | *Register in app* | *Custom* | Create account with College ID, choose lunch slot (12:05 PM / 12:55 PM), pre-order meals |
 
 ---
 
@@ -89,14 +88,3 @@ All 3 backend servers are configured to bind to `0.0.0.0`, allowing any phone, t
   ```
 - **Access**: [http://localhost:8080](http://localhost:8080)
 
----
-
-## 📁 Excel Spreadsheet Integration
-
-All backends synchronize data with your local Excel files:
-1. **User Credentials & Profiles**:
-   - **Path**: `C:\Users\Pranesh\OneDrive\Documents\login_details.xlsx`
-   - **Columns**: `NAME` | `EMAIL_NAME` | `PASSWORD` | `PHONE_NUMBER` | `USERTYPE(CANTEEN_OWNER/CUSTOMER)` | `LUNCH_SLOT`
-2. **Orders & Menu Catalog**:
-   - **Path**: `C:\Users\Pranesh\OneDrive\Documents\MENU.xlsx`
-   - **Columns**: `S.NO` | `DATE` | `TOKEN NUMBER` | `FOOD NAME` | `STATUS(PREPARED/NOT PREPARED)` | `PAYMENT(PAID)`
