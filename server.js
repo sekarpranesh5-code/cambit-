@@ -3,13 +3,22 @@ const cors = require('cors');
 const path = require('path');
 const store = require('./dataStore');
 
+const fs = require('fs');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Ensure public/uploads directory exists for food photos
+const UPLOADS_DIR = path.join(__dirname, 'public', 'uploads');
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
 
 // Request logger
 app.use((req, res, next) => {
@@ -78,6 +87,50 @@ app.post('/api/system/reset-demo', (req, res) => {
     store.resetToDefault();
     res.json({ success: true, message: "Demo data reset successfully." });
   } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// ==========================================
+// FOOD IMAGE UPLOAD ENDPOINT
+// Accepts food pictures from Laptop (Pictures/Downloads) or Phone (Gallery/Camera)
+// ==========================================
+app.post('/api/upload', (req, res) => {
+  try {
+    const { image } = req.body;
+    if (!image) {
+      return res.status(400).json({ success: false, error: 'No image provided' });
+    }
+
+    // If it's already an existing relative path or web URL, return as is
+    if (image.startsWith('/uploads/') || image.startsWith('http://') || image.startsWith('https://')) {
+      return res.json({ success: true, imageUrl: image });
+    }
+
+    // Parse base64 Data URL
+    const matches = image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      return res.status(400).json({ success: false, error: 'Invalid image format. Expected valid image data.' });
+    }
+
+    const mimeType = matches[1];
+    const base64Data = matches[2];
+    const buffer = Buffer.from(base64Data, 'base64');
+
+    let ext = 'jpg';
+    if (mimeType.includes('png')) ext = 'png';
+    else if (mimeType.includes('webp')) ext = 'webp';
+    else if (mimeType.includes('gif')) ext = 'gif';
+
+    const filename = `food-${Date.now()}-${Math.floor(Math.random() * 10000)}.${ext}`;
+    const filePath = path.join(UPLOADS_DIR, filename);
+
+    fs.writeFileSync(filePath, buffer);
+    const imageUrl = `/uploads/${filename}`;
+    console.log(`[Upload] Food photo saved: ${imageUrl} (${Math.round(buffer.length / 1024)} KB)`);
+    res.json({ success: true, imageUrl });
+  } catch (err) {
+    console.error('Upload error in /api/upload:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });

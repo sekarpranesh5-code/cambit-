@@ -825,8 +825,40 @@ class DataStore {
     };
   }
 
+  saveImageIfBase64(imageStr) {
+    if (!imageStr || typeof imageStr !== 'string') return imageStr;
+    if (!imageStr.startsWith('data:image/')) return imageStr;
+
+    try {
+      const uploadsDir = path.join(__dirname, 'public', 'uploads');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      const matches = imageStr.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+      if (!matches || matches.length !== 3) return imageStr;
+
+      const mimeType = matches[1];
+      const base64Data = matches[2];
+      const buffer = Buffer.from(base64Data, 'base64');
+
+      let ext = 'jpg';
+      if (mimeType.includes('png')) ext = 'png';
+      else if (mimeType.includes('webp')) ext = 'webp';
+      else if (mimeType.includes('gif')) ext = 'gif';
+
+      const filename = `food-${Date.now()}-${Math.floor(Math.random() * 10000)}.${ext}`;
+      const filePath = path.join(uploadsDir, filename);
+      fs.writeFileSync(filePath, buffer);
+      return `/uploads/${filename}`;
+    } catch (e) {
+      console.error('Error saving base64 image in DataStore:', e);
+      return imageStr;
+    }
+  }
+
   // Menu inventory operations
   addMenuItem(itemData) {
+    const finalImage = this.saveImageIfBase64(itemData.image) || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80";
     const newItem = {
       id: `menu-${Date.now()}`,
       name: itemData.name,
@@ -836,7 +868,7 @@ class DataStore {
       stock: parseInt(itemData.stock, 10) || 30,
       dailyLimit: parseInt(itemData.dailyLimit, 10) || parseInt(itemData.stock, 10) || 30,
       description: itemData.description || "",
-      image: itemData.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80",
+      image: finalImage,
       tag: itemData.tag || "New"
     };
     this.data.menu.push(newItem);
@@ -856,7 +888,7 @@ class DataStore {
     if (updates.stock !== undefined) item.stock = parseInt(updates.stock, 10);
     if (updates.dailyLimit !== undefined) item.dailyLimit = parseInt(updates.dailyLimit, 10);
     if (updates.description !== undefined) item.description = updates.description;
-    if (updates.image !== undefined) item.image = updates.image;
+    if (updates.image !== undefined) item.image = this.saveImageIfBase64(updates.image);
     if (updates.tag !== undefined) item.tag = updates.tag;
 
     this.save();

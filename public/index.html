@@ -1127,9 +1127,55 @@
           <label>Description:</label>
           <textarea id="itemFormDesc" rows="2" placeholder="Ingredients and details..."></textarea>
         </div>
-        <div class="form-group">
-          <label>Image URL:</label>
-          <input type="url" id="itemFormImage" placeholder="https://..." value="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80">
+        <div class="form-group image-upload-group">
+          <label>Food Item Photo:</label>
+          <input type="hidden" id="itemFormImage" value="">
+          <input type="file" id="itemFormImageFile" accept="image/*" style="display: none;">
+
+          <div class="image-dropzone" id="imageDropzone">
+            <!-- Empty state asking user to upload from laptop (Pictures/Downloads) or phone -->
+            <div class="dropzone-empty" id="dropzoneEmpty">
+              <div class="upload-icon-circle">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                  <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+              </div>
+              <div class="upload-title">Upload Food Picture</div>
+              <div class="upload-device-hints">
+                <div class="hint-pill">
+                  <span>💻 <strong>Laptop/PC:</strong> Select from Pictures or Downloads</span>
+                </div>
+                <div class="hint-pill">
+                  <span>📱 <strong>Phone:</strong> Select from Gallery / Photos or Camera</span>
+                </div>
+              </div>
+              <button type="button" class="btn-upload-browse" id="btnBrowsePhoto">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                Choose Photo from Device
+              </button>
+              <div class="upload-progress-text" id="uploadStatusText">Supports JPG, PNG, WEBP (Auto-optimized)</div>
+            </div>
+
+            <!-- Preview State -->
+            <div class="dropzone-preview hidden" id="dropzonePreview">
+              <img id="previewImageEl" src="" alt="Food Preview">
+              <div class="preview-actions-bar">
+                <div class="preview-file-info" id="previewFileInfo">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg>
+                  <span>Photo selected</span>
+                </div>
+                <div class="preview-btns">
+                  <button type="button" class="btn-preview-action change" id="btnChangePhoto" title="Choose another photo">
+                    🔄 Change
+                  </button>
+                  <button type="button" class="btn-preview-action remove" id="btnRemovePhoto" title="Remove photo">
+                    ✕ Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <button type="submit" class="btn-primary btn-block" id="btnSaveMenuItem">Save Item to MENU.xlsx</button>
       </form>

@@ -518,7 +518,7 @@ function renderMenu() {
     return `
       <div class="menu-card" data-id="${item.id}">
         <div class="card-img-wrapper">
-          <img src="${item.image}" alt="${item.name}" loading="lazy">
+          <img src="${item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80'}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80'">
           <span class="badge-diet ${item.type}">${dietIcon}</span>
           ${item.tag ? `<span class="badge-tag">${item.tag}</span>` : ''}
           ${isSoldOut ? `<div class="sold-out-overlay">SOLD OUT</div>` : ''}
@@ -1457,6 +1457,163 @@ async function resetAllDailyStock() {
   }
 }
 
+// ==========================================
+// FOOD IMAGE UPLOAD & COMPRESSION HELPERS
+// Supports Laptop (Pictures/Downloads) and Phone (Photos/Camera)
+// ==========================================
+async function compressImageFile(file, maxDimension = 900, quality = 0.85) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+        if (width > maxDimension || height > maxDimension) {
+          if (width > height) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          } else {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function setImageDropzonePreview(imgSrc, infoText = 'Photo selected') {
+  const hiddenInput = document.getElementById('itemFormImage');
+  const previewContainer = document.getElementById('dropzonePreview');
+  const emptyContainer = document.getElementById('dropzoneEmpty');
+  const previewImg = document.getElementById('previewImageEl');
+  const infoEl = document.getElementById('previewFileInfo');
+
+  if (imgSrc) {
+    if (hiddenInput) hiddenInput.value = imgSrc;
+    if (previewImg) previewImg.src = imgSrc;
+    if (infoEl) infoEl.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"></path></svg><span>${infoText}</span>`;
+    if (previewContainer) previewContainer.classList.remove('hidden');
+    if (emptyContainer) emptyContainer.classList.add('hidden');
+  } else {
+    if (hiddenInput) hiddenInput.value = '';
+    if (previewImg) previewImg.src = '';
+    const fileInput = document.getElementById('itemFormImageFile');
+    if (fileInput) fileInput.value = '';
+    if (previewContainer) previewContainer.classList.add('hidden');
+    if (emptyContainer) emptyContainer.classList.remove('hidden');
+  }
+}
+
+async function handleFoodImageSelection(file) {
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    showToast('Please select a valid image file (JPG, PNG, WEBP).', 'error');
+    return;
+  }
+
+  const statusText = document.getElementById('uploadStatusText');
+  if (statusText) statusText.textContent = '⏳ Processing and optimizing image...';
+
+  try {
+    const compressedDataUrl = await compressImageFile(file);
+    const sizeKb = Math.round((compressedDataUrl.length * 3) / 4 / 1024);
+    setImageDropzonePreview(compressedDataUrl, `✓ ${file.name || 'Food Photo'} (${sizeKb} KB)`);
+    if (statusText) statusText.textContent = 'Supports JPG, PNG, WEBP (Auto-optimized)';
+    showToast('Photo uploaded and ready!', 'success');
+  } catch (err) {
+    console.error('Error processing image:', err);
+    showToast('Could not process this image file.', 'error');
+    if (statusText) statusText.textContent = 'Failed to load image. Please try again.';
+  }
+}
+
+function initImageUploadHandler() {
+  const dropzone = document.getElementById('imageDropzone');
+  const fileInput = document.getElementById('itemFormImageFile');
+  const btnBrowse = document.getElementById('btnBrowsePhoto');
+  const btnChange = document.getElementById('btnChangePhoto');
+  const btnRemove = document.getElementById('btnRemovePhoto');
+
+  if (!dropzone || !fileInput) return;
+
+  // Browse buttons trigger native file picker (Pictures/Downloads on Laptop, Gallery/Camera on Phone)
+  if (btnBrowse) {
+    btnBrowse.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      fileInput.click();
+    });
+  }
+
+  if (btnChange) {
+    btnChange.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      fileInput.click();
+    });
+  }
+
+  if (btnRemove) {
+    btnRemove.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setImageDropzonePreview('');
+    });
+  }
+
+  // Clicking dropzone outside buttons also triggers file picker if empty
+  dropzone.addEventListener('click', (e) => {
+    if (e.target.closest('.preview-actions-bar') || e.target.closest('button')) return;
+    const previewContainer = document.getElementById('dropzonePreview');
+    if (previewContainer && previewContainer.classList.contains('hidden')) {
+      fileInput.click();
+    }
+  });
+
+  // Native file input change
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files[0]) {
+      handleFoodImageSelection(e.target.files[0]);
+    }
+  });
+
+  // Drag and drop support from Laptop File Explorer / Desktop
+  ['dragenter', 'dragover'].forEach(name => {
+    dropzone.addEventListener(name, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropzone.classList.add('dragover');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach(name => {
+    dropzone.addEventListener(name, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dropzone.classList.remove('dragover');
+    });
+  });
+
+  dropzone.addEventListener('drop', (e) => {
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFoodImageSelection(e.dataTransfer.files[0]);
+    }
+  });
+}
+
 function openAddItemModal() {
   document.getElementById('menuItemModalTitle').textContent = 'Add New Menu Item (Canteen Incharge)';
   document.getElementById('editMenuItemId').value = '';
@@ -1465,6 +1622,7 @@ function openAddItemModal() {
   document.getElementById('itemFormLimit').value = '40';
   document.getElementById('itemFormStock').value = '40';
   document.getElementById('itemFormDesc').value = '';
+  setImageDropzonePreview('');
   document.getElementById('menuItemModal').classList.remove('hidden');
 }
 
@@ -1481,13 +1639,55 @@ function openEditItemModal(id) {
   document.getElementById('itemFormLimit').value = item.dailyLimit || item.stock;
   document.getElementById('itemFormStock').value = item.stock;
   document.getElementById('itemFormDesc').value = item.description || '';
-  document.getElementById('itemFormImage').value = item.image || '';
+  if (item.image) {
+    setImageDropzonePreview(item.image, 'Current Food Photo');
+  } else {
+    setImageDropzonePreview('');
+  }
   document.getElementById('menuItemModal').classList.remove('hidden');
 }
 
 async function handleSaveMenuItem(e) {
   e.preventDefault();
   const id = document.getElementById('editMenuItemId').value;
+  let imageVal = document.getElementById('itemFormImage').value.trim();
+
+  // Validate that an image has been uploaded
+  if (!imageVal) {
+    showToast('Please upload a food photo from Pictures/Downloads (Laptop) or Photos (Phone)!', 'error');
+    const dropzone = document.getElementById('imageDropzone');
+    if (dropzone) {
+      dropzone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      dropzone.classList.add('dragover');
+      setTimeout(() => dropzone.classList.remove('dragover'), 1200);
+    }
+    return;
+  }
+
+  const saveBtn = document.getElementById('btnSaveMenuItem');
+  const originalBtnText = saveBtn ? saveBtn.textContent : '';
+  if (saveBtn) {
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Uploading photo & saving...';
+  }
+
+  // If imageVal is a base64 data URL, upload to /api/upload to store cleanly on server disk
+  if (imageVal.startsWith('data:image/')) {
+    try {
+      const uploadRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: imageVal })
+      });
+      const uploadData = await uploadRes.json();
+      if (uploadData.success && uploadData.imageUrl) {
+        imageVal = uploadData.imageUrl;
+      }
+    } catch (uploadErr) {
+      console.warn('Upload API call failed, falling back to direct save:', uploadErr);
+    }
+  }
+
   const payload = {
     name: document.getElementById('itemFormName').value.trim(),
     category: document.getElementById('itemFormCategory').value,
@@ -1496,7 +1696,7 @@ async function handleSaveMenuItem(e) {
     dailyLimit: parseInt(document.getElementById('itemFormLimit').value, 10),
     stock: parseInt(document.getElementById('itemFormStock').value, 10),
     description: document.getElementById('itemFormDesc').value.trim(),
-    image: document.getElementById('itemFormImage').value.trim()
+    image: imageVal
   };
 
   try {
@@ -1520,10 +1720,17 @@ async function handleSaveMenuItem(e) {
       document.getElementById('menuItemModal').classList.add('hidden');
       await fetchMenu();
       await fetchExcelStatus();
-      showToast('Item saved directly into MENU.xlsx!', 'success');
+      showToast('Item saved directly into MENU.xlsx with photo!', 'success');
+    } else {
+      showToast(data.error || 'Failed to save item', 'error');
     }
   } catch (err) {
     showToast('Error saving item.', 'error');
+  } finally {
+    if (saveBtn) {
+      saveBtn.disabled = false;
+      saveBtn.textContent = originalBtnText;
+    }
   }
 }
 
@@ -1957,6 +2164,9 @@ function setupEventListeners() {
   // Holiday / Event switch change immediate handlers
   document.getElementById('chkHolidayMode').addEventListener('change', saveAdminSystemSettings);
   document.getElementById('chkEventMode').addEventListener('change', saveAdminSystemSettings);
+
+  // Initialize food photo upload dropzone & camera handlers
+  initImageUploadHandler();
 }
 
 function setupStarRatings(containerId, ratingKey) {
