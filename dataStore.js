@@ -9,34 +9,15 @@ const DATA_FILE = isVercel ? path.join('/tmp', 'database.json') : LOCAL_DATA_FIL
 
 const DEFAULT_USERS = [
   {
-    name: "Aarav Sharma",
-    email: "aarav.cs23@college.edu",
-    password: "student123",
-    phone: "9876543210",
-    role: "student",
-    userType: "CUSTOMER",
-    lunchSlot: "Slot 1: 12:05 PM",
-    slotId: "slot1"
-  },
-  {
-    name: "Dr. Meenakshi Raman",
-    email: "m.raman@college.edu",
-    password: "faculty123",
-    phone: "9876543211",
-    role: "faculty",
-    userType: "CUSTOMER",
-    lunchSlot: "Slot 1: 12:05 PM",
-    slotId: "slot1"
-  },
-  {
-    name: "Sundaram M. (Owner)",
-    email: "canteen.owner@college.edu",
-    password: "admin123",
-    phone: "9876543212",
+    name: "Pranesh S",
+    email: "sekarpranesh5@gmail.com",
+    password: "12345678",
+    phone: "09025764496",
     role: "admin",
     userType: "CANTEEN_OWNER",
     lunchSlot: "Slot 1: 12:05 PM",
-    slotId: "slot1"
+    slotId: "slot1",
+    id: "USR-8142"
   }
 ];
 
@@ -76,271 +57,9 @@ function getInitialData() {
       simulationTime: "10:30", // 10:30 AM allows ordering for both slots by default
       simulationDate: today
     },
-    menu: [
-      {
-        id: "menu-1",
-        name: "Hyderabadi Chicken Dum Biryani",
-        category: "Rice & Biryani",
-        type: "non-veg",
-        price: 140,
-        stock: 42,
-        dailyLimit: 50,
-        description: "Authentic dum-cooked spiced basmati rice with tender marinated chicken, served with onion raita & mirchi ka salan.",
-        image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80",
-        tag: "Bestseller"
-      },
-      {
-        id: "menu-2",
-        name: "Royal Paneer Dum Biryani",
-        category: "Rice & Biryani",
-        type: "veg",
-        price: 120,
-        stock: 32,
-        dailyLimit: 40,
-        description: "Aromatic basmati rice layered with seasoned paneer cubes, saffron, mint and crispy fried onions.",
-        image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=500&auto=format&fit=crop&q=80",
-        tag: "Popular"
-      },
-      {
-        id: "menu-3",
-        name: "South Indian Executive Thali",
-        category: "Thali & Meals",
-        type: "veg",
-        price: 90,
-        stock: 35,
-        dailyLimit: 45,
-        description: "Steamed Ponni rice, Sambar, Rasam, Kara Kuzhambu, Poriyal, Kootu, Appalam, Curd & Payasam sweet.",
-        image: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=500&auto=format&fit=crop&q=80",
-        tag: "Healthy"
-      },
-      {
-        id: "menu-4",
-        name: "Deluxe North Indian Thali",
-        category: "Thali & Meals",
-        type: "veg",
-        price: 130,
-        stock: 28,
-        dailyLimit: 35,
-        description: "Paneer Butter Masala, Dal Makhani, 3 Soft Butter Rotis, Jeera Rice, Salad, Pickle & Gulab Jamun.",
-        image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop&q=80",
-        tag: "Chef Special"
-      },
-      {
-        id: "menu-5",
-        name: "Schezwan Veg Fried Rice & Manchurian",
-        category: "Combos",
-        type: "veg",
-        price: 105,
-        stock: 22,
-        dailyLimit: 30,
-        description: "Spicy wok-tossed Schezwan vegetable rice served with 4 vegetable Manchurian balls in rich savory gravy.",
-        image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500&auto=format&fit=crop&q=80",
-        tag: "Campus Hit"
-      },
-      {
-        id: "menu-6",
-        name: "Egg Fried Rice & Chilli Chicken",
-        category: "Combos",
-        type: "non-veg",
-        price: 135,
-        stock: 19,
-        dailyLimit: 25,
-        description: "Fluffy egg fried rice paired with spicy Indo-Chinese dry chilli chicken with bell peppers & spring onions.",
-        image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&auto=format&fit=crop&q=80",
-        tag: "Staff Choice"
-      },
-      {
-        id: "menu-7",
-        name: "Ghee Podi Masala Dosa",
-        category: "Quick Bites",
-        type: "veg",
-        price: 65,
-        stock: 14,
-        dailyLimit: 25,
-        description: "Golden crispy crepe smeared with aromatic gunpowder podi and desi ghee, stuffed with seasoned potato masala.",
-        image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop&q=80",
-        tag: "Crispy"
-      },
-      {
-        id: "menu-8",
-        name: "Crispy Samosa Chaat (2 Pcs)",
-        category: "Quick Bites",
-        type: "veg",
-        price: 50,
-        stock: 0, // Demonstrates sold out lockout
-        dailyLimit: 30,
-        description: "Crushed potato samosas topped with warm chana masala, sweet tamarind chutney, spicy mint chutney & sev.",
-        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop&q=80",
-        tag: "Sold Out Demo"
-      },
-      {
-        id: "menu-9",
-        name: "Chilled Mango Lassi (300ml)",
-        category: "Beverages",
-        type: "veg",
-        price: 45,
-        stock: 24,
-        dailyLimit: 30,
-        description: "Thick, creamy yogurt shake prepared with sweet Alphonso mango pulp, cardamom, and pistachio slivers.",
-        image: "https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=500&auto=format&fit=crop&q=80",
-        tag: "Chilled"
-      },
-      {
-        id: "menu-10",
-        name: "Cold-Pressed Sweet Lime Juice",
-        category: "Beverages",
-        type: "veg",
-        price: 40,
-        stock: 20,
-        dailyLimit: 25,
-        description: "Freshly squeezed sweet lime (Mosambi) juice with black salt and a dash of chaat masala. Zero added sugar.",
-        image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=500&auto=format&fit=crop&q=80",
-        tag: "Natural"
-      }
-    ],
-    orders: [
-      {
-        id: "ORD-9821",
-        tokenCode: "TKN-1205-9821",
-        customerId: "CS2023-084",
-        customerName: "Aarav Sharma",
-        customerRole: "student",
-        customerEmail: "aarav.cs23@college.edu",
-        orderDate: today,
-        slotId: "slot1",
-        slotName: "Slot 1: 12:05 PM",
-        orderPlacedAt: `${today} 10:12:00`,
-        items: [
-          { menuId: "menu-1", name: "Hyderabadi Chicken Dum Biryani", price: 140, quantity: 2 },
-          { menuId: "menu-9", name: "Chilled Mango Lassi (300ml)", price: 45, quantity: 2 }
-        ],
-        totalPlates: 2,
-        totalAmount: 370,
-        paymentStatus: "PAID",
-        paymentMethod: "UPI (Google Pay)",
-        transactionId: "TXN-UPI-88492041",
-        tokenStatus: "ACTIVE", // ACTIVE | REDEEMED | CANCELLED
-        redeemedAt: null,
-        verifiedBy: null
-      },
-      {
-        id: "ORD-9822",
-        tokenCode: "TKN-1205-9822",
-        customerId: "FAC-ECE-12",
-        customerName: "Dr. Meenakshi Raman",
-        customerRole: "faculty",
-        customerEmail: "m.raman@college.edu",
-        orderDate: today,
-        slotId: "slot1",
-        slotName: "Slot 1: 12:05 PM",
-        orderPlacedAt: `${today} 09:45:00`,
-        items: [
-          { menuId: "menu-3", name: "South Indian Executive Thali", price: 90, quantity: 1 }
-        ],
-        totalPlates: 1,
-        totalAmount: 90,
-        paymentStatus: "PAID",
-        paymentMethod: "Campus Smartcard",
-        transactionId: "TXN-CARD-9921441",
-        tokenStatus: "ACTIVE",
-        redeemedAt: null,
-        verifiedBy: null
-      },
-      {
-        id: "ORD-9823",
-        tokenCode: "TKN-1255-9823",
-        customerId: "ME2022-105",
-        customerName: "Rohan Varma",
-        customerRole: "student",
-        customerEmail: "rohan.me22@college.edu",
-        orderDate: today,
-        slotId: "slot2",
-        slotName: "Slot 2: 12:55 PM",
-        orderPlacedAt: `${today} 10:40:00`,
-        items: [
-          { menuId: "menu-2", name: "Royal Paneer Dum Biryani", price: 120, quantity: 1 },
-          { menuId: "menu-5", name: "Schezwan Veg Fried Rice & Manchurian", price: 105, quantity: 1 }
-        ],
-        totalPlates: 2,
-        totalAmount: 225,
-        paymentStatus: "PAID",
-        paymentMethod: "UPI (PhonePe)",
-        transactionId: "TXN-UPI-33910811",
-        tokenStatus: "ACTIVE",
-        redeemedAt: null,
-        verifiedBy: null
-      },
-      {
-        id: "ORD-9818",
-        tokenCode: "TKN-1205-9818",
-        customerId: "CS2023-019",
-        customerName: "Pooja Krishnan",
-        customerRole: "student",
-        customerEmail: "pooja.cs23@college.edu",
-        orderDate: today,
-        slotId: "slot1",
-        slotName: "Slot 1: 12:05 PM",
-        orderPlacedAt: `${today} 09:20:00`,
-        items: [
-          { menuId: "menu-4", name: "Deluxe North Indian Thali", price: 130, quantity: 1 }
-        ],
-        totalPlates: 1,
-        totalAmount: 130,
-        paymentStatus: "PAID",
-        paymentMethod: "UPI (Paytm)",
-        transactionId: "TXN-UPI-11940293",
-        tokenStatus: "REDEEMED",
-        redeemedAt: `${today} 12:08:15`,
-        verifiedBy: "Counter 2 (Kavitha S.)"
-      }
-    ],
-    feedbacks: [
-      {
-        id: "FB-101",
-        orderId: "ORD-9818",
-        tokenCode: "TKN-1205-9818",
-        foodName: "Deluxe North Indian Thali",
-        customerName: "Pooja Krishnan",
-        customerRole: "student",
-        customerId: "CS2023-019",
-        orderDate: today,
-        slotName: "Slot 1: 12:05 PM",
-        quantityRating: 5,
-        qualityRating: 5,
-        comment: "North Indian Thali portion was very generous! Rotis were piping hot and paneer gravy was rich. Pre-ordering saved 25 minutes of break time.",
-        createdAt: `${today} 12:45:00`
-      },
-      {
-        id: "FB-102",
-        orderId: "ORD-9810",
-        tokenCode: "TKN-1255-9810",
-        foodName: "South Indian Executive Thali",
-        customerName: "Prof. Arvind Swaminathan",
-        customerRole: "faculty",
-        customerId: "FAC-MECH-04",
-        orderDate: today,
-        slotName: "Slot 2: 12:55 PM",
-        quantityRating: 4,
-        qualityRating: 5,
-        comment: "Excellent food quality and seamless token counter verification. App eliminated the peak lunch rush completely.",
-        createdAt: `${today} 13:20:00`
-      },
-      {
-        id: "FB-103",
-        orderId: "ORD-9805",
-        tokenCode: "TKN-1205-9805",
-        foodName: "Hyderabadi Chicken Dum Biryani",
-        customerName: "Divya Nambiar",
-        customerRole: "student",
-        customerId: "BT2024-031",
-        orderDate: today,
-        slotName: "Slot 1: 12:05 PM",
-        quantityRating: 5,
-        qualityRating: 4,
-        comment: "The Hyderabadi Chicken Biryani had generous pieces and aromatic basmati. Fast pickup with token QR scan.",
-        createdAt: `${today} 12:35:00`
-      }
-    ],
+    menu: [],
+    orders: [],
+    feedbacks: [],
     users: DEFAULT_USERS
   };
 }
@@ -794,12 +513,12 @@ class DataStore {
   // Aggregate feedback analytics & item-specific ratings
   getFeedbackAnalytics() {
     const list = this.data.feedbacks;
-    if (!list.length) {
+    if (!list || !list.length) {
       return {
         totalReviews: 0,
-        avgQuantity: 5.0,
-        avgQuality: 5.0,
-        overallAvg: 5.0,
+        avgQuantity: "0.0",
+        avgQuality: "0.0",
+        overallAvg: "0.0",
         byFood: {},
         feedbacks: []
       };

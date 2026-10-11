@@ -486,6 +486,17 @@ function renderMenu() {
     items = items.filter(i => i.name.toLowerCase().includes(q) || i.category.toLowerCase().includes(q) || (i.description && i.description.toLowerCase().includes(q)));
   }
 
+  if (state.menu.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 3.5rem 1.5rem; color: var(--text-muted); background: white; border-radius: var(--radius-lg); border: 1.5px dashed var(--border-color);">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍽️</div>
+        <p style="font-size: 1.15rem; font-weight: 700; color: var(--secondary);">No Food Items in Menu Yet</p>
+        <p style="font-size: 0.85rem; margin-top: 0.35rem;">Fresh daily items will appear here as soon as the Canteen Incharge adds today's kitchen menu.</p>
+      </div>
+    `;
+    return;
+  }
+
   if (items.length === 0) {
     container.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
@@ -1382,6 +1393,17 @@ function renderAdminInventory() {
   const container = document.getElementById('adminInventoryGrid');
   if (!container) return;
 
+  if (!state.menu || state.menu.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1.5rem; color: var(--text-muted); background: white; border-radius: var(--radius-lg); border: 1.5px dashed var(--border-color);">
+        <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">📋</div>
+        <p style="font-size: 1.15rem; font-weight: 700; color: var(--secondary);">No Menu Items Created Yet</p>
+        <p style="font-size: 0.85rem; margin-top: 0.35rem;">Click the <strong>"+ Add New Food Item"</strong> button above to add real-time food items and upload photos.</p>
+      </div>
+    `;
+    return;
+  }
+
   container.innerHTML = state.menu.map(item => `
     <div class="inv-card">
       <div class="inv-top">
@@ -1761,6 +1783,16 @@ function renderAdminFeedback() {
 
   const feedList = document.getElementById('adminFeedbackList');
   if (!feedList) return;
+
+  if (!analytics.feedbacks || analytics.feedbacks.length === 0) {
+    feedList.innerHTML = `
+      <div style="text-align: center; padding: 3rem 1.5rem; background: var(--surface); border-radius: var(--radius-lg); border: 1.5px dashed var(--border-color); color: var(--text-muted);">
+        <p style="font-size: 1.1rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.35rem;">No Customer Reviews Yet</p>
+        <p style="font-size: 0.88rem; margin: 0;">Real-time student & faculty feedback will appear here as meals are redeemed and rated.</p>
+      </div>
+    `;
+    return;
+  }
 
   feedList.innerHTML = analytics.feedbacks.map(f => `
     <div class="review-item">
