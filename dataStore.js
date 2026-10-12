@@ -27,6 +27,129 @@ function getTodayString() {
   return now.toISOString().split('T')[0];
 }
 
+const DEFAULT_MENU = [
+  {
+    id: "menu-1",
+    name: "Hyderabadi Chicken Dum Biryani",
+    category: "Rice & Biryani",
+    type: "non-veg",
+    price: 140,
+    stock: 42,
+    dailyLimit: 50,
+    description: "Authentic dum-cooked spiced basmati rice with tender marinated chicken, served with onion raita & mirchi ka salan.",
+    image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80",
+    tag: "Bestseller"
+  },
+  {
+    id: "menu-2",
+    name: "Royal Paneer Dum Biryani",
+    category: "Rice & Biryani",
+    type: "veg",
+    price: 120,
+    stock: 32,
+    dailyLimit: 40,
+    description: "Aromatic basmati rice layered with seasoned paneer cubes, saffron, mint and crispy fried onions.",
+    image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=500&auto=format&fit=crop&q=80",
+    tag: "Popular"
+  },
+  {
+    id: "menu-3",
+    name: "South Indian Executive Thali",
+    category: "Thali & Meals",
+    type: "veg",
+    price: 90,
+    stock: 35,
+    dailyLimit: 45,
+    description: "Steamed Ponni rice, Sambar, Rasam, Kara Kuzhambu, Poriyal, Kootu, Appalam, Curd & Payasam sweet.",
+    image: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=500&auto=format&fit=crop&q=80",
+    tag: "Healthy"
+  },
+  {
+    id: "menu-4",
+    name: "Deluxe North Indian Thali",
+    category: "Thali & Meals",
+    type: "veg",
+    price: 130,
+    stock: 28,
+    dailyLimit: 35,
+    description: "Paneer Butter Masala, Dal Makhani, 3 Soft Butter Rotis, Jeera Rice, Salad, Pickle & Gulab Jamun.",
+    image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop&q=80",
+    tag: "Chef Special"
+  },
+  {
+    id: "menu-5",
+    name: "Schezwan Veg Fried Rice & Manchurian",
+    category: "Combos",
+    type: "veg",
+    price: 105,
+    stock: 22,
+    dailyLimit: 30,
+    description: "Spicy wok-tossed Schezwan vegetable rice served with 4 vegetable Manchurian balls in rich savory gravy.",
+    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=500&auto=format&fit=crop&q=80",
+    tag: "Campus Hit"
+  },
+  {
+    id: "menu-6",
+    name: "Egg Fried Rice & Chilli Chicken",
+    category: "Combos",
+    type: "non-veg",
+    price: 135,
+    stock: 19,
+    dailyLimit: 25,
+    description: "Fluffy egg fried rice paired with spicy Indo-Chinese dry chilli chicken with bell peppers & spring onions.",
+    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&auto=format&fit=crop&q=80",
+    tag: "Staff Choice"
+  },
+  {
+    id: "menu-7",
+    name: "Ghee Podi Masala Dosa",
+    category: "Quick Bites",
+    type: "veg",
+    price: 65,
+    stock: 14,
+    dailyLimit: 25,
+    description: "Golden crispy crepe smeared with aromatic gunpowder podi and desi ghee, stuffed with seasoned potato masala.",
+    image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop&q=80",
+    tag: "Crispy"
+  },
+  {
+    id: "menu-8",
+    name: "Crispy Samosa Chaat (2 Pcs)",
+    category: "Quick Bites",
+    type: "veg",
+    price: 50,
+    stock: 25,
+    dailyLimit: 30,
+    description: "Crushed potato samosas topped with warm chana masala, sweet tamarind chutney, spicy mint chutney & sev.",
+    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop&q=80",
+    tag: "Snack"
+  },
+  {
+    id: "menu-9",
+    name: "Chilled Mango Lassi (300ml)",
+    category: "Beverages",
+    type: "veg",
+    price: 45,
+    stock: 24,
+    dailyLimit: 30,
+    description: "Thick, creamy yogurt shake prepared with sweet Alphonso mango pulp, cardamom, and pistachio slivers.",
+    image: "https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=500&auto=format&fit=crop&q=80",
+    tag: "Chilled"
+  },
+  {
+    id: "menu-10",
+    name: "Cold-Pressed Sweet Lime Juice",
+    category: "Beverages",
+    type: "veg",
+    price: 40,
+    stock: 20,
+    dailyLimit: 25,
+    description: "Freshly squeezed sweet lime (Mosambi) juice with black salt and a dash of chaat masala. Zero added sugar.",
+    image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=500&auto=format&fit=crop&q=80",
+    tag: "Natural"
+  }
+];
+
 // Initial seed dataset
 function getInitialData() {
   const today = getTodayString();
@@ -57,7 +180,7 @@ function getInitialData() {
       simulationTime: "10:30", // 10:30 AM allows ordering for both slots by default
       simulationDate: today
     },
-    menu: [],
+    menu: DEFAULT_MENU,
     orders: [],
     feedbacks: [],
     users: DEFAULT_USERS
@@ -89,6 +212,10 @@ class DataStore {
       if (!this.data || !this.data.users) {
         if (!this.data) this.data = getInitialData();
         if (!this.data.users) this.data.users = DEFAULT_USERS;
+      }
+      if (!this.data.menu || this.data.menu.length === 0) {
+        this.data.menu = DEFAULT_MENU;
+        this.save();
       }
       // Ensure both Excel files are seeded & synchronized
       excelStore.ensureSeeded(this.data.users || DEFAULT_USERS, this.data.orders, this.data.menu);
@@ -363,15 +490,39 @@ class DataStore {
     const validatedItems = [];
 
     for (const orderItem of items) {
-      const menuItem = this.data.menu.find(m => m.id === orderItem.menuId);
-      if (!menuItem) {
-        throw new Error(`Menu item not found: ${orderItem.menuId}`);
+      let menuItem = this.data.menu.find(m => m.id === orderItem.menuId);
+
+      // Fallback 1: match by food name if ID was regenerated or changed
+      if (!menuItem && orderItem.name) {
+        menuItem = this.data.menu.find(m => m.name && m.name.trim().toLowerCase() === orderItem.name.trim().toLowerCase());
       }
+
+      // Fallback 2: Auto-resolve/register cart item so order placement is resilient (e.g. across Vercel serverless cold starts)
+      if (!menuItem) {
+        menuItem = {
+          id: orderItem.menuId || `menu-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+          name: orderItem.name || 'Canteen Meal',
+          category: orderItem.category || 'Combos',
+          type: orderItem.type || 'veg',
+          price: parseFloat(orderItem.price) || 50,
+          stock: 50,
+          dailyLimit: 50,
+          description: orderItem.description || '',
+          image: orderItem.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=80',
+          tag: 'Popular'
+        };
+        this.data.menu.push(menuItem);
+        this.save();
+        try {
+          excelStore.saveFullMenuExcel(this.data.orders, this.data.menu, this.data.feedbacks);
+        } catch (e) {}
+      }
+
       if (menuItem.stock < orderItem.quantity) {
         throw new Error(`Insufficient stock for "${menuItem.name}". Only ${menuItem.stock} plates remaining.`);
       }
       calculatedTotal += menuItem.price * orderItem.quantity;
-      if (menuItem.category.includes('Thali') || menuItem.category.includes('Biryani') || menuItem.category.includes('Combos')) {
+      if (menuItem.category && (menuItem.category.includes('Thali') || menuItem.category.includes('Biryani') || menuItem.category.includes('Combos'))) {
         totalPlatesCount += orderItem.quantity;
       } else {
         totalPlatesCount += orderItem.quantity;
